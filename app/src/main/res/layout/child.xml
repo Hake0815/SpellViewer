@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/simpleTableLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:stretchColumns="*"> <!-- stretch the second column of the layout-->
+
+    <!-- first row of the table layout-->
+    <TableRow
+
+        android:id="@+id/firstRow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <!-- first element of the row-->
+        <TextView
+
+            android:id="@+id/simpleTextRank"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="18dip"
+            android:textColor="@color/text"
+            android:textSize="14dp" />
+
+        <TextView
+
+            android:id="@+id/simpleTextMana"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="18dip"
+            android:textColor="@color/text"
+            android:textSize="14dp" />
+
+        <TextView
+
+            android:id="@+id/simpleTextDC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="18dip"
+            android:textColor="@color/text"
+            android:textSize="14dp" />
+
+    </TableRow>
+    <TableRow
+
+        android:id="@+id/secondRow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <!-- first element of the row-->
+        <TextView
+
+            android:id="@+id/simpleTextAction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="18dip"
+            android:textColor="@color/text"
+            android:textSize="14dp" />
+
+        <TextView
+
+            android:id="@+id/simpleTextRange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="18dip"
+            android:textColor="@color/text"
+            android:textSize="14dp" />
+
+        <TextView
+
+            android:id="@+id/simpleTextDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="18dip"
+            android:textColor="@color/text"
+            android:textSize="14dp" />
+
+    </TableRow>
+    <TableRow
+
+        android:id="@+id/thirdRow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <!-- first element of the row-->
+        <TextView
+
+            android:id="@+id/simpleTextDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_span="3"
+            android:padding="18dip"
+            android:textColor="@color/text"
+            android:textSize="14dp" />
+
+    </TableRow>
+</TableLayout>

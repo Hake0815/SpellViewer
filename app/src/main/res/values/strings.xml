@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">SpellViewer</string>
+    <string name="panic_name">Panik</string>
+    <string name="panic_description">ZW löst den Zustand Panik in bis zu 3 Lebewesen in bis zu 15 m Reichweite aus. Panische
+Lebewesen ergreifen sofort die Flucht. Betroffene werfen zu Beginn jeder ihrer Runden
+auf Willenskraft gegen den PW+2 des Zaubers. Nach jeder gescheiterten Probe wird sie
+um 2 leichter.</string>
+    <string name="panic_range">15 m</string>
+    <string name="panic_duration">bis Befreiung</string>
+    <string name="panic_dc">Willenskraft-2</string>
+    <string name="standardAction">Standardaktion</string>
+    <string name="fullAction">Volle Aktion</string>
+    <string name="freeAction">Freie Aktion</string>
+    <string name="quickAction">Schnelle Aktion</string>
+    <string name="rank">Rang</string>
+    <string name="dc">SK</string>
+    <string name="mana">Mana</string>
+</resources>
