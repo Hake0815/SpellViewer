@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context="com.example.spellviewer.MainActivity">
+    tools:context="com.example.spellviewer.MainActivity2">
 
     <ExpandableListView
         android:id="@+id/expandableListView"
@@ -19,11 +19,4 @@
         android:dividerHeight="1.0dp"
         android:childDivider="#A4C739"
         android:textColor="#FF000000" />
-
-    <Button
-        android:id="@+id/goToSpellsButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/addSpellButton"/>
-<!--        android:onClick="goToSpellList"/>-->
 </RelativeLayout>
