@@ -11,7 +11,8 @@
 
         android:id="@+id/firstRow"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dip">
 
         <!-- first element of the row-->
         <TextView
@@ -19,7 +20,7 @@
             android:id="@+id/simpleTextRank"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="18dip"
+            android:padding="5dip"
             android:textColor="@color/text"
             android:textSize="14dp" />
 
@@ -28,7 +29,7 @@
             android:id="@+id/simpleTextMana"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="18dip"
+            android:padding="5dip"
             android:textColor="@color/text"
             android:textSize="14dp" />
 
@@ -37,7 +38,7 @@
             android:id="@+id/simpleTextDC"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="18dip"
+            android:padding="5dip"
             android:textColor="@color/text"
             android:textSize="14dp" />
 
@@ -46,7 +47,8 @@
 
         android:id="@+id/secondRow"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dip">
 
         <!-- first element of the row-->
         <TextView
@@ -54,7 +56,7 @@
             android:id="@+id/simpleTextAction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="18dip"
+            android:padding="5dip"
             android:textColor="@color/text"
             android:textSize="14dp" />
 
@@ -63,7 +65,7 @@
             android:id="@+id/simpleTextRange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="18dip"
+            android:padding="5dip"
             android:textColor="@color/text"
             android:textSize="14dp" />
 
@@ -72,7 +74,7 @@
             android:id="@+id/simpleTextDuration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="18dip"
+            android:padding="5dip"
             android:textColor="@color/text"
             android:textSize="14dp" />
 
@@ -81,7 +83,8 @@
 
         android:id="@+id/thirdRow"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dip">
 
         <!-- first element of the row-->
         <TextView
@@ -90,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_span="3"
-            android:padding="18dip"
+            android:padding="5dip"
             android:textColor="@color/text"
             android:textSize="14dp" />
 

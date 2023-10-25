@@ -6,6 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
+
+import androidx.core.content.res.ResourcesCompat;
+
 import java.util.List;
 
 /**
@@ -89,15 +93,36 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
         String spellName = ((Spell) getGroup(listPosition)).getName();
+        SpellCat spellCat = ((Spell) getGroup(listPosition)).getSpellCat();
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.parent, null);
         }
-        TextView listTitleTextView = (TextView) convertView
-                .findViewById(R.id.text);
-        listTitleTextView.setTypeface(null, Typeface.BOLD);
-        listTitleTextView.setText(spellName);
+        TextView nameTextView = (TextView) convertView
+                .findViewById(R.id.textViewLeft);
+        nameTextView.setTypeface(null, Typeface.BOLD);
+        nameTextView.setText(spellName);
+        TextView catTextView = (TextView) convertView
+                .findViewById(R.id.textViewRight);
+        catTextView.setTypeface(null, Typeface.BOLD);
+        catTextView.setText(spellCat.toString());
+        int textColor;
+        switch (spellCat) {
+            case Enchantment:
+                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.enchantment,null);
+            case Summoning:
+                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.enchantment,null);
+            case Destruction:
+                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.enchantment,null);
+            case Alteration:
+                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.enchantment,null);
+            default:
+                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.enchantment,null);;
+        }
+        catTextView.setTextColor(textColor);
+        nameTextView.setTextColor(textColor);
+
         return convertView;
     }
 

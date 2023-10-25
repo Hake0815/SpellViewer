@@ -4,13 +4,14 @@ public class Spell {
     private final String name;
     private final String description;
     private final int rank;
-    private final int manaCost;
+    private final String manaCost;
     private final String dc;
     private final Action actionCost;
     private final String range;
     private final String duration;
+    private final SpellCat spellcat;
 
-    public Spell(String name, String description, int rank, int manaCost, String dc, Action actionCost, String range, String duration) {
+    public Spell(String name, String description, int rank, String manaCost, String dc, Action actionCost, String range, String duration, SpellCat spellcat) {
         this.name = name;
         this.description = description;
         this.rank = rank;
@@ -19,13 +20,14 @@ public class Spell {
         this.actionCost = actionCost;
         this.range = range;
         this.duration = duration;
+        this.spellcat = spellcat;
     }
 
     public String getDc() {
         return dc;
     }
 
-    public int getManaCost() {
+    public String getManaCost() {
         return manaCost;
     }
 
@@ -51,6 +53,9 @@ public class Spell {
 
     public String getRange() {
         return range;
+    }
+    public SpellCat getSpellCat() {
+        return spellcat;
     }
 
 }

@@ -1,5 +1,19 @@
 <resources>
     <string name="app_name">SpellViewer</string>
+    <string name="addSpellButton">Zauber zu Liste hinzufügen</string>
+    <string name="standardAction">Standardaktion</string>
+    <string name="fullAction">Volle Aktion</string>
+    <string name="freeAction">Freie Aktion</string>
+    <string name="quickAction">Schnelle Aktion</string>
+    <string name="rank">Rang</string>
+    <string name="dc">SK</string>
+    <string name="mana">Mana</string>
+    <string name="enchantment">Verzauberung</string>
+    <string name="summoning">Beschwörung</string>
+    <string name="destruction">Zerstörung</string>
+    <string name="alteration">Veränderung</string>
+
+    <!--    Panic spell   -->
     <string name="panic_name">Panik</string>
     <string name="panic_description">ZW löst den Zustand Panik in bis zu 3 Lebewesen in bis zu 15 m Reichweite aus. Panische
 Lebewesen ergreifen sofort die Flucht. Betroffene werfen zu Beginn jeder ihrer Runden
@@ -8,11 +22,21 @@ um 2 leichter.</string>
     <string name="panic_range">15 m</string>
     <string name="panic_duration">bis Befreiung</string>
     <string name="panic_dc">Willenskraft-2</string>
-    <string name="standardAction">Standardaktion</string>
-    <string name="fullAction">Volle Aktion</string>
-    <string name="freeAction">Freie Aktion</string>
-    <string name="quickAction">Schnelle Aktion</string>
-    <string name="rank">Rang</string>
-    <string name="dc">SK</string>
-    <string name="mana">Mana</string>
+    <string name="panic_mana">2/Ziel</string>
+    <!--    Calm animal spell   -->
+    <string name="calmAnimal_name">Tiere besänfitigen</string>
+    <string name="calmAnimal_description">ZW kann ein Tier in 20 m Entfernung beruhigen, dieses ist nicht mehr aggressiv.</string>
+    <string name="calmAnimal_range">20 m</string>
+    <string name="calmAnimal_duration">1 Stunde</string>
+    <string name="calmAnimal_dc">SL</string>
+    <string name="calmAnimal_mana">2</string>
+    <!--    Darkvision spell -->
+    <string name="darkVision_name">Dunkelsicht</string>
+    <string name="darkVision_description">ZW kann im Dunkeln sehen. Alle Mali durch Dunkelheit werden um 4(+1xSteigerung)
+verringert.</string>
+    <string name="darkVision_range">selbst</string>
+    <string name="darkVision_duration">Manakosten h</string>
+    <string name="darkVision_dc">8</string>
+    <string name="darkVision_mana">1/h</string>
+    <string name="title_activity_main2">MainActivity2</string>
 </resources>
