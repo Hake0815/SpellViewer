@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SpellViewer</string>
     <string name="addSpellButton">Zauber zu Liste hinzufügen</string>
+    <string name="confirmSpellsButton">Zauber hinzufügen</string>
     <string name="standardAction">Standardaktion</string>
     <string name="fullAction">Volle Aktion</string>
     <string name="freeAction">Freie Aktion</string>

@@ -17,13 +17,26 @@ import java.util.List;
  */
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
-    private Context context;
+    private final Context context;
     private List<Spell> expandableListSpells;
+    private final boolean withCheckMarks;
     //private HashMap<String, List<String>> expandableListDetail;
 
     public ExpandableListAdapter(Context context, List<Spell> expandableListSpells) {
         this.context = context;
         this.expandableListSpells = expandableListSpells;
+        this.withCheckMarks = false;
+    }
+
+    public ExpandableListAdapter(Context context, List<Spell> expandableListSpells,boolean withCheckMarks) {
+        this.context = context;
+        this.expandableListSpells = expandableListSpells;
+        this.withCheckMarks = withCheckMarks;
+    }
+
+    public void addNewSpells(List<Spell> newSpells) {
+        this.expandableListSpells = newSpells;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -45,19 +58,19 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.child, null);
         }
-        TextView expandedListTextViewRank = (TextView) convertView
+        TextView expandedListTextViewRank = convertView
                 .findViewById(R.id.simpleTextRank);
-        TextView expandedListTextViewMana = (TextView) convertView
+        TextView expandedListTextViewMana = convertView
                 .findViewById(R.id.simpleTextMana);
-        TextView expandedListTextViewDC = (TextView) convertView
+        TextView expandedListTextViewDC = convertView
                 .findViewById(R.id.simpleTextDC);
-        TextView expandedListTextViewAction = (TextView) convertView
+        TextView expandedListTextViewAction = convertView
                 .findViewById(R.id.simpleTextAction);
-        TextView expandedListTextViewRange = (TextView) convertView
+        TextView expandedListTextViewRange = convertView
                 .findViewById(R.id.simpleTextRange);
-        TextView expandedListTextViewDuration = (TextView) convertView
+        TextView expandedListTextViewDuration = convertView
                 .findViewById(R.id.simpleTextDuration);
-        TextView expandedListTextViewDescription = (TextView) convertView
+        TextView expandedListTextViewDescription = convertView
                 .findViewById(R.id.simpleTextDescription);
         expandedListTextViewAction.setText(spell.getActionCost().toString());
         expandedListTextViewDescription.setText(spell.getDescription());
@@ -97,13 +110,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.parent, null);
+            if (withCheckMarks){
+                convertView = layoutInflater.inflate(R.layout.parent_withcheckmarks, null);
+            } else {
+                convertView = layoutInflater.inflate(R.layout.parent, null);
+            }
         }
-        TextView nameTextView = (TextView) convertView
+        TextView nameTextView = convertView
                 .findViewById(R.id.textViewLeft);
         nameTextView.setTypeface(null, Typeface.BOLD);
         nameTextView.setText(spellName);
-        TextView catTextView = (TextView) convertView
+        TextView catTextView = convertView
                 .findViewById(R.id.textViewRight);
         catTextView.setTypeface(null, Typeface.BOLD);
         catTextView.setText(spellCat.toString());
@@ -111,14 +128,18 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         switch (spellCat) {
             case Enchantment:
                 textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.enchantment,null);
+                break;
             case Summoning:
-                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.enchantment,null);
+                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.summoning,null);
+                break;
             case Destruction:
-                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.enchantment,null);
+                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.destruction,null);
+                break;
             case Alteration:
-                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.enchantment,null);
+                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.alteration,null);
+                break;
             default:
-                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.enchantment,null);;
+                textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.text,null);
         }
         catTextView.setTextColor(textColor);
         nameTextView.setTextColor(textColor);
@@ -135,4 +156,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int listPosition, int expandedListPosition) {
         return true;
     }
+
+
 }

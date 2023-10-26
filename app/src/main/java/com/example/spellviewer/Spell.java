@@ -1,6 +1,8 @@
 package com.example.spellviewer;
 
-public class Spell {
+import java.io.Serializable;
+
+public class Spell implements Comparable, Serializable {
     private final String name;
     private final String description;
     private final int rank;
@@ -11,7 +13,7 @@ public class Spell {
     private final String duration;
     private final SpellCat spellcat;
 
-    public Spell(String name, String description, int rank, String manaCost, String dc, Action actionCost, String range, String duration, SpellCat spellcat) {
+    public Spell(String name, String description, int rank, String manaCost, String dc, Action actionCost, String range, String duration, SpellCat spellcat){
         this.name = name;
         this.description = description;
         this.rank = rank;
@@ -56,6 +58,39 @@ public class Spell {
     }
     public SpellCat getSpellCat() {
         return spellcat;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        int tempComp;
+        if (o instanceof Spell){
+            tempComp = this.spellcat.compareTo(((Spell) o).getSpellCat());
+            if (tempComp == 0) {
+                if (this.rank < ((Spell) o).getRank()) {
+                    return -1;
+                } else if (this.rank > ((Spell) o).getRank()) {
+                    return 1;
+                } else {
+                    return this.name.compareTo(((Spell) o).getName());
+                }
+            } else {
+                return tempComp;
+            }
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o instanceof Spell) {
+            if (this.name.equals(((Spell) o).getName())) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
 }
