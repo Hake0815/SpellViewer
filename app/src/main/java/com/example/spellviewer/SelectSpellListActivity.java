@@ -61,8 +61,8 @@ public class SelectSpellListActivity extends AppCompatActivity {
                 long packedPosition = expandableListView.getExpandableListPosition(position);
 
                 int itemType = ExpandableListView.getPackedPositionType(packedPosition);
-                int groupPosition = ExpandableListView.getPackedPositionGroup(packedPosition);
-                int childPosition = ExpandableListView.getPackedPositionChild(packedPosition);
+//                int groupPosition = ExpandableListView.getPackedPositionGroup(packedPosition);
+//                int childPosition = ExpandableListView.getPackedPositionChild(packedPosition);
 
 
                 /*  if group item clicked */
@@ -95,11 +95,12 @@ public class SelectSpellListActivity extends AppCompatActivity {
         SpellListItem currentView;
         List<Spell> spells = new ArrayList<>();
         for (int i = 0; i<expandableListAdapter.getGroupCount(); i++){
-            currentView = (SpellListItem) expandableListView.getChildAt(i);
-//            currentView = (SpellListItem) expandableListAdapter.getGroupView(i,true, null, null);
-            if (currentView.isChecked()) {
-                spells.add((Spell) expandableListAdapter.getGroup(i));
-
+            if (expandableListView.getChildAt(i) instanceof SpellListItem) {
+                currentView = (SpellListItem) expandableListView.getChildAt(i);
+//              currentView = (SpellListItem) expandableListAdapter.getGroupView(i,true, null, null);
+                if (currentView.isChecked()) {
+                    spells.add((Spell) expandableListAdapter.getGroup(i));
+                }
             }
         }
         Bundle extra = new Bundle();
