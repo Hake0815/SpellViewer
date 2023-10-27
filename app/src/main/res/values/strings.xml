@@ -6,7 +6,7 @@
     <string name="standardAction">Standardaktion</string>
     <string name="fullAction">Volle Aktion</string>
     <string name="freeAction">Freie Aktion</string>
-    <string name="quickAction">Schnelle Aktion</string>
+    <string name="bonusAction">Bonusaktion</string>
     <string name="rank">Rang</string>
     <string name="dc">SK</string>
     <string name="mana">Mana</string>
@@ -14,6 +14,7 @@
     <string name="summoning">Beschwörung</string>
     <string name="destruction">Zerstörung</string>
     <string name="alteration">Veränderung</string>
+    <string name="title_activity_main2">MainActivity2</string>
 
     <!--    Panic spell   -->
     <string name="panic_name">Panik</string>
@@ -40,5 +41,130 @@ verringert.</string>
     <string name="darkVision_duration">Manakosten h</string>
     <string name="darkVision_dc">8</string>
     <string name="darkVision_mana">1/h</string>
-    <string name="title_activity_main2">MainActivity2</string>
+    <!--    Slow fall spell -->
+    <string name="slowFall_name">Langsamer Fall</string>
+    <string name="slowFall_description">Langsamer Fall reduziert die Fallgeschwindigkeit auf maximal 2 m/s. Beim Aufprall wird
+kein Schaden erlitten.</string>
+    <string name="slowFall_range">selbst</string>
+    <string name="slowFall_duration">1 min</string>
+    <string name="slowFall_dc">8</string>
+    <string name="slowFall_mana">2</string>
+    <!--    Animal speech spell -->
+    <string name="animalSpeech_name">Tiersprache</string>
+    <string name="animalSpeech_description">ZW und alle Verbündeten in 10 m Entfernung können mit einer bestimmten Tierartspre-
+chen (SK: 7) oder mit allen Tieren (SK: 9).</string>
+    <string name="animalSpeech_range">10 m</string>
+    <string name="animalSpeech_duration">30 min</string>
+    <string name="animalSpeech_dc">7/9</string>
+    <string name="animalSpeech_mana">1</string>
+    <!--    Speak with dead spell -->
+    <string name="speakWithDead_name">Totensprache</string>
+    <string name="speakWithDead_description">ZW kann mit einer Leiche sprechen die noch immer einen Mund hat und nicht älter als
+ein halbes Jahr ist und auf die dieser Zauber nicht in den letzten 10 Tagen angewandt
+wurde. Die Leiche weiß nur was sie im Leben wusste und kann 5 Fragen beantworten.
+Die Antworten sind in der Regeln nur sehr kurz und oft etwas kryptisch.</string>
+    <string name="speakWithDead_range">10 m</string>
+    <string name="speakWithDead_duration">30 min</string>
+    <string name="speakWithDead_dc">8</string>
+    <string name="speakWithDead_mana">1</string>
+    <!--    Confusion spell -->
+    <string name="confusion_name">Verwirrung</string>
+    <string name="confusion_description">ZW löst eine Verwirrung in einem Lebewesen in 20 m Reichweite aus. Das Opfer wirft
+zu Beginn jeder seiner Runden auf Willenskraft gegen den PW+2 des Zaubers. Gelingt
+dies nicht greifen sie zufällige Lebewesen in der Umgebung an. Nach jeder gescheiterten
+Probe wird sie um 2 leichter.</string>
+    <string name="confusion_range">20 m</string>
+    <string name="confusion_duration">bis Befreiung</string>
+    <string name="confusion_dc">Willenskraft-2</string>
+    <string name="confusion_mana">3</string>
+    <!--    Boil blood spell -->
+    <string name="boilBlood_name">Blut kochen</string>
+    <string name="boilBlood_description">ZW lässt das Blut eines Ziels kochen. Richtet immer wenn das Ziel an der Reihe ist
+Wil(+1xSteigerung) Magieschaden an.</string>
+    <string name="boilBlood_range">20 m</string>
+    <string name="boilBlood_duration">beliebig</string>
+    <string name="boilBlood_dc">Willenskraft</string>
+    <string name="boilBlood_mana">2/Runde</string>
+    <!--    Veiled view spell -->
+    <string name="veiledView_name">Sicht verhüllen</string>
+    <string name="veiledView_description">ZW legt einen Schatten über das Ziel. Das Ziel hat eine schlechte Sicht (Bei einer Steige-
+rung: ist fast blind, bei zwei Steigerungen ist blind). Das Ziel bekommt -2(-1xSteigerung)
+auf die RK. Ab einer Steigerung kann das Ziel keine Fernkampfangriffe mehr durchführen.</string>
+    <string name="veiledView_range">30 m</string>
+    <string name="veiledView_duration">5 Runden</string>
+    <string name="veiledView_dc">Reagieren</string>
+    <string name="veiledView_mana">2</string>
+    <!--    Sleep spell -->
+    <string name="sleep_name">Einschläfern</string>
+    <string name="sleep_description">ZW versetzt ein Lebewesen in natürlichen Schlaf.</string>
+    <string name="sleep_range">20</string>
+    <string name="sleep_duration">bis geweckt</string>
+    <string name="sleep_dc">Willenskraft</string>
+    <string name="sleep_mana">2</string>
+    <!--    Water breathing spell -->
+    <string name="waterBreathing_name">Wasseratmung</string>
+    <string name="waterBreathing_description">ZW kann unter Wasser atmen.</string>
+    <string name="waterBreathing_range">selbst</string>
+    <string name="waterBreathing_duration">(20+2*Lvl) min</string>
+    <string name="waterBreathing_dc">9</string>
+    <string name="waterBreathing_mana">3</string>
+    <!--    Farsight spell -->
+    <string name="farsight_name">Weitsicht</string>
+    <string name="farsight_description">ZW kann Details in doppelter Entfernung erkennen. Distanzmali werden halbiert.</string>
+    <string name="farsight_range">selbst</string>
+    <string name="farsight_duration">(10+Lvl) min</string>
+    <string name="farsight_dc">9</string>
+    <string name="farsight_mana">3</string>
+    <!--    Befriend spell -->
+    <string name="befriend_name">Befreunden</string>
+    <string name="befriend_description">Ein Lebewesen ist für 5 min(+2xSteigerung) der beste Freund des ZW.</string>
+    <string name="befriend_range">5 m</string>
+    <string name="befriend_duration">(5+2*Steigerung) min</string>
+    <string name="befriend_dc">Willenskraft</string>
+    <string name="befriend_mana">3</string>
+    <!--    invisibility spell -->
+    <string name="invisibility_name">Unsichtbarkeit</string>
+    <string name="invisibility_description">Der Zauberwirker kann sich selbst unsichtbar machen.</string>
+    <string name="invisibility_range">selbst</string>
+    <string name="invisibility_duration">10 min</string>
+    <string name="invisibility_dc">10</string>
+    <string name="invisibility_mana">5</string>
+    <!--    disease spell -->
+    <string name="disease_name">Krankheit</string>
+    <string name="disease_description">Ein Ziel in 10 m Entfernung wirft eine Ausdauerprobe gegen den PW des Zaubers. Bei
+Misserfolg erkrankt das Ziel für eine Woche. Das Ziel erhält einen Malus von 1W4 auf
+Kon und verliert 3W6 maximale Lebenspunkte.</string>
+    <string name="disease_range">10 m</string>
+    <string name="disease_duration">1 Woche</string>
+    <string name="disease_dc">Ausdauer</string>
+    <string name="disease_mana">4</string>
+    <!--    bloodlust spell -->
+    <string name="bloodlust_name">Blutrausch</string>
+    <string name="bloodlust_description">Versetzt ein Lebewesen in Berührenreichweite in Blutrausch, sodass dieses 4(+4xStei-
+gerung) mehr Schaden verursacht und erhält. Dieser Effekt wird um den gleichen Wert
+erhöht sobald der vom Blutrausch betroffene einen Gegner tötet. Der Zauber dauert bis
+zu 2 Runden + 1 Runde pro Spielerlevel an, er kann aber auch früher vom Zauberwirker
+beendet werden.</string>
+    <string name="bloodlust_range">Berühren</string>
+    <string name="bloodlust_duration">(2+Lvl) Runden</string>
+    <string name="bloodlust_dc">9</string>
+    <string name="bloodlust_mana">2</string>
+    <!--    curse spell -->
+    <string name="curse_name">Fluch</string>
+    <string name="curse_description">ZW braucht etwas vom Opfer (z.B. Haar). Alle Proben des Opfers sind für einen Tag
+um 4(+4xSteigerung) erschwert und das Opfer erhält einen Malus von 3(+3xSteigerung)
+auf alle Angriffswürfe.</string>
+    <string name="curse_range">-</string>
+    <string name="curse_duration">1 Tag</string>
+    <string name="curse_dc">Willenskraft-2</string>
+    <string name="curse_mana">5</string>
+    <!--    bloodRitual spell -->
+    <string name="bloodRitual_name">Blutritual</string>
+    <string name="bloodRitual_description">ZW kann mit Blut eines frisch getöteten Lebewesens ein Ritual durchführen (mind 1 l
+Blut). ZW erhält +2(+2xSteigerung) auf ein beliebiges Attribut für 3 Tage. Bei erneuter
+Durchführung des Rituals geht der alte Bonus verloren.</string>
+    <string name="bloodRitual_range">selbst</string>
+    <string name="bloodRitual_duration">3 Tage</string>
+    <string name="bloodRitual_dc">10</string>
+    <string name="bloodRitual_mana">4</string>
 </resources>
