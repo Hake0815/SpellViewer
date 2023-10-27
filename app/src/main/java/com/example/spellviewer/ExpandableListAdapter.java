@@ -34,8 +34,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         this.withCheckMarks = withCheckMarks;
     }
 
-    public void addNewSpells(List<Spell> newSpells) {
+    public void updateSpellList(List<Spell> newSpells) {
         this.expandableListSpells = newSpells;
+        notifyDataSetChanged();
+    }
+
+    public void updateData(){
         notifyDataSetChanged();
     }
 

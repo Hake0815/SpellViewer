@@ -24,4 +24,12 @@ public class Character implements Serializable {
     public void addSpell (Spell spell) {
         spells.add(spell);
     }
+
+    /**
+     * Remove a spell from spell list
+     * @param i index of spell to be removed
+     */
+    public void removeSpell(int i){
+        spells.remove(i);
+    }
 }
