@@ -2,7 +2,7 @@ package com.example.spellviewer;
 
 public enum Action {
     STANDARDACTION,
-    QUICKACTION,
+    BONUSACTION,
     FREEACTION,
     FULLACTION;
 
@@ -11,14 +11,14 @@ public enum Action {
         switch (this) {
             case STANDARDACTION:
                 return MainActivity.resources.getString(R.string.standardAction);
-            case QUICKACTION:
-                return MainActivity.resources.getString(R.string.quickAction);
+            case BONUSACTION:
+                return MainActivity.resources.getString(R.string.bonusAction);
             case FREEACTION:
                 return MainActivity.resources.getString(R.string.freeAction);
             case FULLACTION:
                 return MainActivity.resources.getString(R.string.fullAction);
             default:
-                return null;
+                return "";
         }
     }
 }

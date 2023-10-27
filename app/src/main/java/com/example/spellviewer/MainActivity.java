@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         updateSpellListView();
+//                        writeCharacterToFile();
                     }
                 });
 
@@ -100,8 +102,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onPause(){
-        super.onPause();
+    public void onStop(){
+        super.onStop();
+        writeCharacterToFile();
+    }
+    @Override
+    public void onStart() {
+        super.onStart();
+        String fileName = gerald.getName();
+        if (fileExists(getApplicationContext(),fileName)) {
+            try {
+                FileInputStream fis = getApplicationContext().openFileInput(fileName);
+                ObjectInputStream is = new ObjectInputStream(fis);
+                gerald = (Character) is.readObject();
+                is.close();
+                fis.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            expandableListAdapter.updateSpellList(gerald.getSpells());
+        }
+    }
+
+    public static boolean fileExists(Context context, String filename) {
+        File file = context.getFileStreamPath(filename);
+        if(file == null || !file.exists()) {
+            return false;
+        }
+        return true;
+    }
+
+    private void writeCharacterToFile() {
         String fileName = gerald.getName();
         try {
             FileOutputStream fos = getApplicationContext().openFileOutput(fileName, Context.MODE_PRIVATE);
@@ -114,22 +147,5 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-    @Override
-    public void onResume(){
-        super.onResume();
-        String fileName = gerald.getName();
-        try {
-            FileInputStream fis = getApplicationContext().openFileInput(fileName);
-            ObjectInputStream is = new ObjectInputStream(fis);
-            gerald = (Character) is.readObject();
-            is.close();
-            fis.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        expandableListAdapter.updateSpellList(gerald.getSpells());
     }
 }
