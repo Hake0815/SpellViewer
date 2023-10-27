@@ -19,7 +19,7 @@
     <!--    Panic spell   -->
     <string name="panic_name">Panik</string>
     <string name="panic_description">ZW löst den Zustand Panik in bis zu 3 Lebewesen in bis zu 15 m Reichweite aus. Panische
-Lebewesen ergreifen sofort die Flucht. Betroffene werfen zu Beginn jeder ihrer Runden
+Lebewesen ergreifen Sofort die Flucht. Betroffene werfen zu Beginn jeder ihrer Runden
 auf Willenskraft gegen den PW+2 des Zaubers. Nach jeder gescheiterten Probe wird sie
 um 2 leichter.</string>
     <string name="panic_range">15 m</string>
@@ -37,7 +37,7 @@ um 2 leichter.</string>
     <string name="darkVision_name">Dunkelsicht</string>
     <string name="darkVision_description">ZW kann im Dunkeln sehen. Alle Mali durch Dunkelheit werden um 4(+1xSteigerung)
 verringert.</string>
-    <string name="darkVision_range">selbst</string>
+    <string name="darkVision_range">Selbst</string>
     <string name="darkVision_duration">Manakosten h</string>
     <string name="darkVision_dc">8</string>
     <string name="darkVision_mana">1/h</string>
@@ -45,7 +45,7 @@ verringert.</string>
     <string name="slowFall_name">Langsamer Fall</string>
     <string name="slowFall_description">Langsamer Fall reduziert die Fallgeschwindigkeit auf maximal 2 m/s. Beim Aufprall wird
 kein Schaden erlitten.</string>
-    <string name="slowFall_range">selbst</string>
+    <string name="slowFall_range">Selbst</string>
     <string name="slowFall_duration">1 min</string>
     <string name="slowFall_dc">8</string>
     <string name="slowFall_mana">2</string>
@@ -82,7 +82,7 @@ Probe wird sie um 2 leichter.</string>
     <string name="boilBlood_description">ZW lässt das Blut eines Ziels kochen. Richtet immer wenn das Ziel an der Reihe ist
 Wil(+1xSteigerung) Magieschaden an.</string>
     <string name="boilBlood_range">20 m</string>
-    <string name="boilBlood_duration">beliebig</string>
+    <string name="boilBlood_duration">Beliebig</string>
     <string name="boilBlood_dc">Willenskraft</string>
     <string name="boilBlood_mana">2/Runde</string>
     <!--    Veiled view spell -->
@@ -104,14 +104,14 @@ auf die RK. Ab einer Steigerung kann das Ziel keine Fernkampfangriffe mehr durch
     <!--    Water breathing spell -->
     <string name="waterBreathing_name">Wasseratmung</string>
     <string name="waterBreathing_description">ZW kann unter Wasser atmen.</string>
-    <string name="waterBreathing_range">selbst</string>
+    <string name="waterBreathing_range">Selbst</string>
     <string name="waterBreathing_duration">(20+2*Lvl) min</string>
     <string name="waterBreathing_dc">9</string>
     <string name="waterBreathing_mana">3</string>
     <!--    Farsight spell -->
     <string name="farsight_name">Weitsicht</string>
     <string name="farsight_description">ZW kann Details in doppelter Entfernung erkennen. Distanzmali werden halbiert.</string>
-    <string name="farsight_range">selbst</string>
+    <string name="farsight_range">Selbst</string>
     <string name="farsight_duration">(10+Lvl) min</string>
     <string name="farsight_dc">9</string>
     <string name="farsight_mana">3</string>
@@ -124,8 +124,8 @@ auf die RK. Ab einer Steigerung kann das Ziel keine Fernkampfangriffe mehr durch
     <string name="befriend_mana">3</string>
     <!--    invisibility spell -->
     <string name="invisibility_name">Unsichtbarkeit</string>
-    <string name="invisibility_description">Der Zauberwirker kann sich selbst unsichtbar machen.</string>
-    <string name="invisibility_range">selbst</string>
+    <string name="invisibility_description">Der Zauberwirker kann sich Selbst unsichtbar machen.</string>
+    <string name="invisibility_range">Selbst</string>
     <string name="invisibility_duration">10 min</string>
     <string name="invisibility_dc">10</string>
     <string name="invisibility_mana">5</string>
@@ -163,8 +163,428 @@ auf alle Angriffswürfe.</string>
     <string name="bloodRitual_description">ZW kann mit Blut eines frisch getöteten Lebewesens ein Ritual durchführen (mind 1 l
 Blut). ZW erhält +2(+2xSteigerung) auf ein beliebiges Attribut für 3 Tage. Bei erneuter
 Durchführung des Rituals geht der alte Bonus verloren.</string>
-    <string name="bloodRitual_range">selbst</string>
+    <string name="bloodRitual_range">Selbst</string>
     <string name="bloodRitual_duration">3 Tage</string>
     <string name="bloodRitual_dc">10</string>
     <string name="bloodRitual_mana">4</string>
+    <!--    lightball spell -->
+    <string name="lightball_name">Lichtkugel</string>
+    <string name="lightball_description">ZW beschwört Lichtkugel für 10 min, die der ZW frei im Radius von 10 m bewegen kann.</string>
+    <string name="lightball_range">10 m</string>
+    <string name="lightball_duration">10 min</string>
+    <string name="lightball_dc">6</string>
+    <string name="lightball_mana">1</string>
+    <!--    flash spell -->
+    <string name="flash_name">Blenden</string>
+    <string name="flash_description">Alle Lebewesen im Kegel (Winkel 120 ) vor dem ZW werden geblendet, sofern sie in
+Richtung des ZW schauen, und erhalten -1(-1xSteigerung) auf RK und Angriffswürfe
+für 2 Kampfrunden. Die Standardreichweite von 10 m kostet den Zauberwirker 2 Mana.
+Jede höhere Reichweitenklasse erhöht die Kosten um 1 Mana.</string>
+    <string name="flash_range">10/20/30</string>
+    <string name="flash_duration">Sofort</string>
+    <string name="flash_dc">6</string>
+    <string name="flash_mana">2/3/4</string>
+    <!--    shield spell -->
+    <string name="shield_name">Schildzauber</string>
+    <string name="shield_description">Wirkbar auf ein Ziel in Berührenreichweite. Ziel erhält +1(+1xSteigerung) auf RK für (1+Lvl)
+Runden.</string>
+    <string name="shield_range">Berühtren</string>
+    <string name="shield_duration">(1+Lvl) Runden</string>
+    <string name="shield_dc">6</string>
+    <string name="shield_mana">3</string>
+    <!--    vineAttack spell -->
+    <string name="vineAttack_name">Rankenangriff</string>
+    <string name="vineAttack_description">ZW beschwört Ranke aus dem Boden in max 30 m Entfernung. Ranke greift alle Fein-
+de in 2 m Radius, direkt nach dem Zug des Zaubernden, an (zählt als Nahkampfan-
+griff). Als Angriffswurf wird erneut eine Zaubernprobe geworfen. Die Ranke verursacht
+2W4(+1xSteigerung) Schaden. Die Ranke hat 10 Lp und keine Abwehr.</string>
+    <string name="vineAttack_range">30 m</string>
+    <string name="vineAttack_duration">dauerhaft</string>
+    <string name="vineAttack_dc">5</string>
+    <string name="vineAttack_mana">2</string>
+    <!--    wall spell -->
+    <string name="wall_name">Wand</string>
+    <string name="wall_description">ZW erzeugt eine durchsichtige solide Wand. Die Wand ist bis zu 2 m hoch und 1 m breit
+für jeden Manapunkt der bezahlt wurde. ZW kann jederzeit den Zauber aufheben und
+die Wand auflösen.</string>
+    <string name="wall_range">5 m</string>
+    <string name="wall_duration">(20+2*Lvl) min</string>
+    <string name="wall_dc">9</string>
+    <string name="wall_mana">1 pro Meter</string>
+    <!--    swamp spell -->
+    <string name="swamp_name">Sumpf</string>
+    <string name="swamp_description">ZW erschafft einen Sumpf in bis zu 30 m Entfernung mit einem Radius von bis zu 5 m.
+Alle Individuen in dem Sumpf sind verlangsamt. Bei 2 Steigerungen sind alle Individuen
+stattdessen stark verlangsamt.</string>
+    <string name="swamp_range">30 m</string>
+    <string name="swamp_duration">(10+2*Lvl) min</string>
+    <string name="swamp_dc">8</string>
+    <string name="swamp_mana">3</string>
+    <!--    mist spell -->
+    <string name="mist_name">Nebel</string>
+    <string name="mist_description">ZW erschafft einen Nebel in 10 m Umkreis pro bezahltem Mana. Der Nebel lässt eine
+Blickweite von 5 m (-1 m x Steigerung) zu</string>
+    <string name="mist_range">(10*Mana) m</string>
+    <string name="mist_duration">(10+2*Lvl) min</string>
+    <string name="mist_dc">8</string>
+    <string name="mist_mana">2–6</string>
+    <!--    familiar spell -->
+    <string name="familiar_name">Schutzgeist</string>
+    <string name="familiar_description">ZW beschwört einen Wolfsgeist für 30 min, der dem ZW gehorcht und gedanklich Befehle
+entgegen nimmt. Der Geist kann Nahkampfangriffe ausführen. Für einen Angriff wirft
+der ZW eine Zaubernprobe. Der Geist verursacht 2W8 Schaden. Der Geist besitzt 20
+(+20xSteigerung) Hp und RK 0. Bewegungsweite 6 m.</string>
+    <string name="familiar_range">10 km</string>
+    <string name="familiar_duration">30</string>
+    <string name="familiar_dc">9</string>
+    <string name="familiar_mana">7</string>
+    <!--    vineShackle spell -->
+    <string name="vineShackle_name">Wurzelfessel</string>
+    <string name="vineShackle_description">ZW lässt bis zu 2 Wurzeln aus dem Boden schießen um Objekte/Körperteile in Bodennähe
+zu fixieren. Um sich aus der Fessel zu befreien ist eine Probe auf Stemmen/Schieben
+gegen die Zauberprobe erforderlich.</string>
+    <string name="vineShackle_range">20 m</string>
+    <string name="vineShackle_duration">dauerhaft</string>
+    <string name="vineShackle_dc">Stemmen/Schieben</string>
+    <string name="vineShackle_mana">3</string>
+    <!--    protectiveField spell -->
+    <string name="protectiveField_name">Schutzfeld</string>
+    <string name="protectiveField_description">ZW erzeugt eine Schützende Sphäre mit 2 m Radius, die jedes Geschoss, welches die
+Sphäre durchdringt um 2(+2xSteigerung) Schaden abschwächt.</string>
+    <string name="protectiveField_range">2 m</string>
+    <string name="protectiveField_duration">1+Lvl</string>
+    <string name="protectiveField_dc">8</string>
+    <string name="protectiveField_mana">2</string>
+    <!--    mirrorImage spell -->
+    <string name="mirrorImage_name">Spiegelbild</string>
+    <string name="mirrorImage_description">ZW erzeugt ein Spiegelbild von sich Selbst, so dass nicht zu erkennen ist, wer der Echte ist.
+Das Spiegelbild kann sich bewegen, ist aber stumm und kann keine Zauber ausführen oder
+Schaden verursachen. Das Spiegelbild kann sich nicht weiter als 20(+10xSteigerung) m
+vom ZW entfernen.</string>
+    <string name="mirrorImage_range">Selbst</string>
+    <string name="mirrorImage_duration">30 min</string>
+    <string name="mirrorImage_dc">8</string>
+    <string name="mirrorImage_mana">4</string>
+    <!--    disguise spell -->
+    <string name="disguise_name">Verkleidung</string>
+    <string name="disguise_description">ZW nimmt die Gestalt einer anderen Person an. Die Basiskosten sind 3 Mana. Ist die zu
+imitierende Person größer, steigen die Kosten (SL). Die zu imitierende Person kann nicht
+mehr als doppelt so groß sein wie der ZW. Die Verkleidung kann mit einer Bemerkenprobe
+durchschaut werden, dazu muss die Bemerkenprobe die Zauberprobe um 2 übertreffen,
+wenn die imitierte Person gut bekannt ist sonst muss sie um 4 übertroffen werden.</string>
+    <string name="disguise_range">Selbst</string>
+    <string name="disguise_duration">(30+5*Lvl) min</string>
+    <string name="disguise_dc">9</string>
+    <string name="disguise_mana">3–5</string>
+    <!--    arcaneHands spell -->
+    <string name="arcaneHands_name">Arkane Hände</string>
+    <string name="arcaneHands_description">ZW beschwört ein Paar Hände in maximal 15 m Entfernung. Die Hände können vom ZW
+wie die eigenen benutzt werden. Die Hände können innerhalb der 15 m Reichweite frei
+bewegt werden.</string>
+    <string name="arcaneHands_range">15 m</string>
+    <string name="arcaneHands_duration">PW min</string>
+    <string name="arcaneHands_dc">8</string>
+    <string name="arcaneHands_mana">2</string>
+    <!--    resurrect spell -->
+    <string name="resurrect_name">Tote Erwecken</string>
+    <string name="resurrect_description">Um den Zauber durchführen zu können sind entweder Knochen oder eine Leiche erfor-
+derlich. Werden Knochen verwendet entsteht ein Skelett und mit einer Leiche entsteht
+ein Zombie. Der Untote kann einfache Befehle telepathisch in 60 m Entfernung als Bo-
+nusaktion empfangen. Der Untote ist nicht in der Lage mit anderen Lebewesen zu
+kommunizieren.
+Der Zombie hat immer die gleiche Initiative wie der Zaubernde und ist immer direkt nach
+ihm im Kampf an der Reihe. Er hat 30 Lp, PA 0 und AU 7(+1xSteigerung). Er kann
+Nahkampfangriffe durchführen mit 2W8(+1xSteigerung) die 1W6 Schaden verursachen.
+Laufenwert: 5.
+Man kann nie mehr als einen Untoten zum Leben erwecken.</string>
+    <string name="resurrect_range">5 m</string>
+    <string name="resurrect_duration">1 Tag</string>
+    <string name="resurrect_dc">9</string>
+    <string name="resurrect_mana">5</string>
+    <!--    poisonCloud spell -->
+    <string name="poisonCloud_name">Giftwolke</string>
+    <string name="poisonCloud_description">Der Zauber erzeugt eine Giftige Wolke in 30 m Entfernung mit einem Radius von 20 m.
+Jedes Lebewesen, welches sich zu Beginn seiner Runde in der Wolke befindet, muss eine
+Ausdauerprobe gegen den PW des Zaubers durchführen. Ist die Probe nicht erfolgreich
+erleidet das Lebewesen 2W6 Giftschaden.</string>
+    <string name="poisonCloud_range">30 m</string>
+    <string name="poisonCloud_duration">5 Runden</string>
+    <string name="poisonCloud_dc">7</string>
+    <string name="poisonCloud_mana">2</string>
+    <!--    deathServant spell -->
+    <string name="deathServant_name">Totendiener</string>
+    <string name="deathServant_description">Eine Leiche die nicht älter als 10 Tage ist, wird für 2 Tage zum Leben erweckt. Der
+Untote hat 1 Lp und nimmt willenlos alle Befehle vom ZW entgegen. Man kann nie mehr
+als einen Untoten zum Leben erwecken.</string>
+    <string name="deathServant_range">Berühren</string>
+    <string name="deathServant_duration">2 Tage</string>
+    <string name="deathServant_dc">10</string>
+    <string name="deathServant_mana">5</string>
+    <!--    summonElemental spell -->
+    <string name="summonElemental_name">Elementar beschwören</string>
+    <string name="summonElemental_description">Der ZW kann mit einem Ritual einen Elementargeist (Wasser, Eis, Feuer, Humus, Erz
+oder Luft) beschwören. Die Schwierigkeit hängt von der Umgebung ab. Ist die Umgebung
+passend zu dem Elementargeist, dann ist die Beschwörung leichter. Die Fähigkeiten des
+Elementargeistes hängen vom Element ab und sind im Regelwerk zu sehen.</string>
+    <string name="summonElemental_range">20 m</string>
+    <string name="summonElemental_duration">Beliebig</string>
+    <string name="summonElemental_dc">9–15</string>
+    <string name="summonElemental_mana">3 pro Tag</string>
+    <!--    energyBullet spell -->
+    <string name="energyBullet_name">Energiegeschoss</string>
+    <string name="energyBullet_description">ZW schießt eine Kugel magischer Energie auf ein Ziel. Verursacht 1W6 (plus 1W4 pro
+Steigerung) Schaden.</string>
+    <string name="energyBullet_range">20/30/40</string>
+    <string name="energyBullet_duration">Sofort</string>
+    <string name="energyBullet_dc">AU</string>
+    <string name="energyBullet_mana">2</string>
+    <!--    fireHands spell -->
+    <string name="fireHands_name">Flammenhand</string>
+    <string name="fireHands_description">ZW setzt seine Hand/Hände in Brand. Faustangriffe erhalten +1(+1xSteigerung) auf den
+Angriffswurf und verursachen 1W4 Extraschaden. Faustangriffe mit einer brennenden
+Hand werden gegen AU des Ziels geworfen.</string>
+    <string name="fireHands_range">Selbst</string>
+    <string name="fireHands_duration">5 Runden</string>
+    <string name="fireHands_dc">8</string>
+    <string name="fireHands_mana">3</string>
+    <!--    tornado spell -->
+    <string name="tornado_name">Wirbelsturm</string>
+    <string name="tornado_description">Zauber erzeugt einen Wirbelsturm in 10 m Entfernung, der sich 5 m pro Runde in eine
+Richtung fortbewegt. Jedes Lebewesen, in max 3 m Entfernung zum Wirbelsturm, wirft
+eine Stemmen/Schieben Probe gegen den PW des Zaubers. Bei Nichtgelingen wird das
+Lebewesen 5 m zurückgeschleudert. Lebewesen die sich in Richtung des Wirbelsturms be-
+wegen sind verlangsamt. Als Bonusaktion kann die Bewegungsrichtung geändert werden.</string>
+    <string name="tornado_range">10 m</string>
+    <string name="tornado_duration">1 min</string>
+    <string name="tornado_dc">7</string>
+    <string name="tornado_mana">2</string>
+    <!--    fireball spell -->
+    <string name="fireball_name">Feuerball</string>
+    <string name="fireball_description">Schießt einen Feuerball als Fernkampfangriff auf ein Ziel. Der Feuerball verursacht dabei
+Ges Schaden plus 1W6 pro Steigerung. Betroffen sind alle Lebewesen in einem Radius
+von 3 m um den Einschlagspunkt.
+Ab PW 15: Verbündete erleiden immer den minimalen Schaden.</string>
+    <string name="fireball_range">20/40/60</string>
+    <string name="fireball_duration">Sofort</string>
+    <string name="fireball_dc">AU</string>
+    <string name="fireball_mana">2</string>
+    <!--    energySword spell -->
+    <string name="energySword_name">Energieschwert</string>
+    <string name="energySword_description">ZW beschwört ein magisches Schwert in max 30 m Entfernung, dass sich relativ zu dem
+ZW mit bewegt. Das Schwert greift in Nahkampfreichweite mit dem PW der Zauberprobe
+an und verursacht 2W6 magischen Schaden (die Würfel werden für jede Steigerung
+verbessert bis hin zu 2W12 bei 3 Steigerungen). Das Schwert hat 15 Lp.</string>
+    <string name="energySword_range">30 m</string>
+    <string name="energySword_duration">dauerhaft</string>
+    <string name="energySword_dc">8</string>
+    <string name="energySword_mana">3</string>
+    <!--    chainLightning spell -->
+    <string name="chainLightning_name">Kettenblitz</string>
+    <string name="chainLightning_description">ZW wirkt einen Blitz auf ein Ziel in 30 m Entfernung der Ges+1W6 Schaden verursacht.
+Der Blitz springt auf das nächststehende Ziel über das max 7 m entfernt ist. Der Blitz
+springt 2(+1xSteigerung) mal über.</string>
+    <string name="chainLightning_range">30 m</string>
+    <string name="chainLightning_duration">Sofort</string>
+    <string name="chainLightning_dc">10</string>
+    <string name="chainLightning_mana">3</string>
+    <!--    iceBolt spell -->
+    <string name="iceBolt_name">Eisgeschoss</string>
+    <string name="iceBolt_description">ZW lässt Eisgeschosse (beliebiger Form, handgroß) auf ein Ziel fliegen. Verursacht
+2Ges(+2xSteigerung) Schaden.</string>
+    <string name="iceBolt_range">20/40/60</string>
+    <string name="iceBolt_duration">Sofort</string>
+    <string name="iceBolt_dc">RK</string>
+    <string name="iceBolt_mana">3</string>
+    <!--    desintegrate spell -->
+    <string name="desintegrate_name">Desintegration</string>
+    <string name="desintegrate_description">Zauber erzeugt einen 40 m langen Kraftstrahl der Materialien auflöst. Auf einen Gegner
+gerichtet trifft der Strahl, wenn der PW größer oder gleich dem AU Wert des Ziels ist
+und verursacht Ges(+Ges*Steigerung) Schaden.</string>
+    <string name="desintegrate_range">40 m</string>
+    <string name="desintegrate_duration">Sofort</string>
+    <string name="desintegrate_dc">AU</string>
+    <string name="desintegrate_mana">4</string>
+    <!--    earthquake spell -->
+    <string name="earthquake_name">Erdbeben</string>
+    <string name="earthquake_description">Der Zauber erzeugt in einem 30 m Radius starke Schwingungen in dem Boden. Alle
+Lebewesen im Wirkungsbereich sind verlangsamt. Zu Beginn jeder Runde muss jedes
+Lebewesen eine Probe auf Akrobatik gegen den PW des Zaubers durchführen, ist diese
+nicht erfolgreich ist das Lebewesen niedergeschlagen.
+Zu Beginn jeden Zuges des ZW öffnen sich zufällig 1W4 Erdspalten im Wirkungsgebiet.
+Diese Erdspalten sind 3 m tief und 1W10 m lang.
+Gebäude im Wirkungsgebiet nehmen zu Beginn jeder Runde 3W10 Schaden.</string>
+    <string name="earthquake_range">120 m</string>
+    <string name="earthquake_duration">Beliebig</string>
+    <string name="earthquake_dc">10</string>
+    <string name="earthquake_mana">2*Runden</string>
+    <!--    seaOfFlames spell -->
+    <string name="seaOfFlames_name">Flammenmeer</string>
+    <string name="seaOfFlames_description">ZW erzeugt ein Flammenmeer in max 20 m Entfernung mit 5 m Radius. Jedes Lebewesen
+erhält, wenn es zu Beginn ihrer Runde im Bereich steht oder sich durch dieses hindurch
+bewegt, Ges+1W6 Magieschaden plus 1W10 pro Steigerung.</string>
+    <string name="seaOfFlames_range">20 m</string>
+    <string name="seaOfFlames_duration">5 Runden</string>
+    <string name="seaOfFlames_dc">10</string>
+    <string name="seaOfFlames_mana">5</string>
+    <!--    plantGrowth spell -->
+    <string name="plantGrowth_name">Pflanzenschub</string>
+    <string name="plantGrowth_description">ZW lässt beliebig viele Pflanzen in bis zu 15 m Entfernung schnell anwachsen. Pflanzen
+wachsen mit bis zu 2 m/Runde(+0,5xSteigerung).</string>
+    <string name="plantGrowth_range">50 m</string>
+    <string name="plantGrowth_duration">Beliebig</string>
+    <string name="plantGrowth_dc">7</string>
+    <string name="plantGrowth_mana">1*Runden</string>
+    <!--    deepPuddle spell -->
+    <string name="deepPuddle_name">Pfütze vertiefen</string>
+    <string name="deepPuddle_description">ZW kann eine existierende Pfütze um 1 m (+1 m x Steigerung) vertiefen. Mit bloßem
+Auge ist der Unterschied nicht wahrnehmbar.</string>
+    <string name="deepPuddle_range">30 m</string>
+    <string name="deepPuddle_duration">Sofort</string>
+    <string name="deepPuddle_dc">6</string>
+    <string name="deepPuddle_mana">1</string>
+    <!--    freeze spell -->
+    <string name="freeze_name">Gefrieren</string>
+    <string name="freeze_description">Lässt leblose wasserhaltige Objekte in Berührenreichweite gefrieren. Der Effekt des Ge-
+frieren breitet sich max 5 m pro bezahltem Mana in dem Objekt aus.</string>
+    <string name="freeze_range">Berühren</string>
+    <string name="freeze_duration">Sofort</string>
+    <string name="freeze_dc">7</string>
+    <string name="freeze_mana">2–4</string>
+    <!--    elementalManipulation spell -->
+    <string name="elementalManipulation_name">Elementare Manipulation</string>
+    <string name="elementalManipulation_description">Der ZW kann einfache Tricks mit den 4 Elementen Luft, Erde, Feuer und Wasser voll-
+führen. Der SL entscheidet ob die Tricks im Rahmen des Zaubers sind. Beispiele sind:
+Luft: Der ZW kann kleine Luftströme erzeugen um Kerzen auszublasen, Feuer anzufachen,
+Körperkühlen in Hitze.
+Erde: ZW kann ein 10 cm großen loch in der Erde erzeugen oder Sand aufwirbeln um
+einen Gegner zu behindern. Feuer: Der ZW kann mit einem Fingerschnippen eine kleine
+Flamme (streichholzgroß) erzeugen, bestehendes Feuer vergrößern oder etwas anzünden.
+Wasser: Der ZW kann ein Liter Wasser in Sichtweite frei bewegen (kein Wasser in einem
+Objekt oder Person).</string>
+    <string name="elementalManipulation_range">10 m</string>
+    <string name="elementalManipulation_duration">Sofort</string>
+    <string name="elementalManipulation_dc">7</string>
+    <string name="elementalManipulation_mana">1</string>
+    <!--    alarm spell -->
+    <string name="alarm_name">Alarm</string>
+    <string name="alarm_description">ZW wird alarmiert wenn ein Lebewesen definierter Größe eine Grenze in bis zu 20 m
+überschreitet.</string>
+    <string name="alarm_range">20 m</string>
+    <string name="alarm_duration">(5*Mana) h</string>
+    <string name="alarm_dc">8</string>
+    <string name="alarm_mana">1–2</string>
+    <!--    soundManipulation spell -->
+    <string name="soundManipulation_name">Tonmanipulation</string>
+    <string name="soundManipulation_description">Mit dem Zauber können Töne wie Flüstergeräusche in bis zu 10 m Entfernung erzeugt
+werden oder die eigene Stimme stark verstärkt werden. Der Effekt hält bis zu 1 Minute
+an.</string>
+    <string name="soundManipulation_range">10 m</string>
+    <string name="soundManipulation_duration">2 min</string>
+    <string name="soundManipulation_dc">6</string>
+    <string name="soundManipulation_mana">1</string>
+    <!--    telekinesis spell -->
+    <string name="telekinesis_name">Telekinese</string>
+    <string name="telekinesis_description">Lässt einen unbelebten Gegenstand schweben bis in bis zu PW m Entfernung. Die
+Schwierigkeit ist Gewicht/(2kg) des Gegenstandes. Solange der Gegenstand schwebt
+muss sich der ZW konzentrieren und kann keine andere Aktion durchführen.</string>
+    <string name="telekinesis_range">30 m</string>
+    <string name="telekinesis_duration">Beliebig</string>
+    <string name="telekinesis_dc">Gewicht/kg</string>
+    <string name="telekinesis_mana">0,5*Runden</string>
+    <!--    darkness spell -->
+    <string name="darkness_name">Dunkelheit</string>
+    <string name="darkness_description">Verdunkelt die Umgebung in 20 m. Bei keiner Steigerung wird die Umgebung dämmrig,
+bei einer Steigerung nächtlich und bei zwei Steigerungen absolut dunkel. Der Effekt hält
+10 Minuten + 2 Minute pro Spielerlevel.</string>
+    <string name="darkness_range">20 m</string>
+    <string name="darkness_duration">(10+2*Lvl) min</string>
+    <string name="darkness_dc">9</string>
+    <string name="darkness_mana">2</string>
+    <!--    iceForming spell -->
+    <string name="iceForming_name">Eisgegenstand</string>
+    <string name="iceForming_description">ZW kann einen Eisgegenstand aus Luftfeuchtigkeit(schwierig) oder Wasser(einfacher)
+erzeugen. Erschwernis wird vom Spielleiter bestimmt.</string>
+    <string name="iceForming_range">5 m</string>
+    <string name="iceForming_duration">sofort</string>
+    <string name="iceForming_dc">SL</string>
+    <string name="iceForming_mana">3</string>
+    <!--    extremeTemperature spell -->
+    <string name="extremeTemperature_name">Extreme Temperatur</string>
+    <string name="extremeTemperature_description">ZW lässt die Temperatur um bis zu 10 C(+40 CxSteigerung) in 100 m Umkreis abfallen
+oder ansteigen.</string>
+    <string name="extremeTemperature_range">100 m</string>
+    <string name="extremeTemperature_duration">2 h</string>
+    <string name="extremeTemperature_dc">9</string>
+    <string name="extremeTemperature_mana">5</string>
+    <!--    switchContent spell -->
+    <string name="switchContent_name">Inhalt tauschen</string>
+    <string name="switchContent_description">Tauscht den Inhalt zweier Äußerlich identischen Gefäße in bis zu 5 m Reichweite.</string>
+    <string name="switchContent_range">5 m</string>
+    <string name="switchContent_duration">Sofort</string>
+    <string name="switchContent_dc">SL</string>
+    <string name="switchContent_mana">3</string>
+    <!--    burrow spell -->
+    <string name="burrow_name">Vergraben</string>
+    <string name="burrow_description">Wenn der ZW auf Erdboden steht, kann er mit diesem verschmelzen und sich mit dem
+normalen Laufenwert unterirdisch bewegen. Der ZW kann sich so nur durch reinen
+Erdboden bewegen.</string>
+    <string name="burrow_range">Selbst</string>
+    <string name="burrow_duration">2 Runden</string>
+    <string name="burrow_dc">9</string>
+    <string name="burrow_mana">3</string>
+    <!--    regeneration spell -->
+    <string name="regeneration_name">Regeneration</string>
+    <string name="regeneration_description">Der Zauberwirker kann die Regeneration des Ziels beschleunigen. In der nächsten Rege-
+nerationsmöglichkeit des Ziels ist die Regeneration verdoppelt.</string>
+    <string name="regeneration_range">Berühren</string>
+    <string name="regeneration_duration">1 Erholungsphase</string>
+    <string name="regeneration_dc">10</string>
+    <string name="regeneration_mana">5</string>
+    <!--    banMagic spell -->
+    <string name="banMagic_name">Magie bannen</string>
+    <string name="banMagic_description">Bannt einen Zauber, wenn die Zauberprobe gegen den PW des zu bannenden Zauber
+gelingt. Auf mittlere Reichweite und hoher Reichweite erhöhen sich die Manakosten um
+jeweils 1 Mana.</string>
+    <string name="banMagic_range">10/20/30</string>
+    <string name="banMagic_duration">Sofort</string>
+    <string name="banMagic_dc">GP Zauber</string>
+    <string name="banMagic_mana">3/4/5</string>
+    <!--    cleansing spell -->
+    <string name="cleansing_name">Reinigung</string>
+    <string name="cleansing_description">Der Zauber kann Krankheiten und Flüche entfernen. Ist die Ursache solcher ein anderer
+Zauber gewesen ist die SK der PW jenen Zaubers. Ansonsten legt der Spielleiter die SK
+fest.</string>
+    <string name="cleansing_range">Berühren</string>
+    <string name="cleansing_duration">Sofort</string>
+    <string name="cleansing_dc">SL</string>
+    <string name="cleansing_mana">3</string>
+    <!--    silence spell -->
+    <string name="silence_name">Stille</string>
+    <string name="silence_description">Der ZW legt einen Punkt in maximal 10 m Entfernung fest. In der Kugel mit Radius
+von 5 m um den gewählten Punkt können keine Geräusche erzeugt werden.</string>
+    <string name="silence_range">10 m</string>
+    <string name="silence_duration">10 min</string>
+    <string name="silence_dc">8</string>
+    <string name="silence_mana">2</string>
+    <!--    antiMagicField spell -->
+    <string name="antiMagicField_name">Antimagiefeld</string>
+    <string name="antiMagicField_description">In einem 5 m Radius um den Zauberwirker können keine Zauber gewirkt werden und
+magische Gegenstände verlieren ihre Wirkung. Ein Zaubergeschoss, dass von außen in
+die Kugel eindringt, wird abgeschwächt, sodass Schaden den dieser Anrichten würde
+geviertelt wird.</string>
+    <string name="antiMagicField_range">selbst</string>
+    <string name="antiMagicField_duration">Lvl min</string>
+    <string name="antiMagicField_dc">12</string>
+    <string name="antiMagicField_mana">5</string>
+    <!--    bearForm spell -->
+    <string name="bearForm_name">Bärengestalt</string>
+    <string name="bearForm_description">ZW kann sich in einen Bären verwandeln. Durch die Verwandlung erhöht sich die Stärke
+und Konstitution um 1W6 (jede Steigerung erhöht den Würfel um eine Stufe bis hin
+zu 1W12 bei 3 Steigerungen). In Bärengestallt kann der ZW keine Zauber mehr wirken
+und alle bestehenden Zauber werden aufgelöst. Der Schaden des Faustangriffs wird um
+2 erhöht.</string>
+    <string name="bearForm_range">selbst</string>
+    <string name="bearForm_duration">1 h</string>
+    <string name="bearForm_dc">10</string>
+    <string name="bearForm_mana">7</string>
 </resources>
