@@ -41,6 +41,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         gerald = new Character("Gerald");
+        String fileName = gerald.getName();
+        if (fileExists(getApplicationContext(),fileName)) {
+            try {
+                FileInputStream fis = getApplicationContext().openFileInput(fileName);
+                ObjectInputStream is = new ObjectInputStream(fis);
+                gerald = (Character) is.readObject();
+                is.close();
+                fis.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
         expandableListView = findViewById(R.id.expandableListView);
         expandableListAdapter = new ExpandableListAdapter(this, gerald.getSpells());
         expandableListView.setAdapter(expandableListAdapter);
@@ -66,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                         }
 
                         updateSpellListView();
-//                        writeCharacterToFile();
                     }
                 });
 
@@ -102,28 +115,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStop(){
-        super.onStop();
+    public void onDestroy(){
         writeCharacterToFile();
+        super.onDestroy();
     }
     @Override
-    public void onStart() {
-        super.onStart();
-        String fileName = gerald.getName();
-        if (fileExists(getApplicationContext(),fileName)) {
-            try {
-                FileInputStream fis = getApplicationContext().openFileInput(fileName);
-                ObjectInputStream is = new ObjectInputStream(fis);
-                gerald = (Character) is.readObject();
-                is.close();
-                fis.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            expandableListAdapter.updateSpellList(gerald.getSpells());
-        }
+    public void onSaveInstanceState(Bundle savedInstanceStae){
+        writeCharacterToFile();
+        super.onSaveInstanceState(savedInstanceStae);
     }
 
     public static boolean fileExists(Context context, String filename) {
