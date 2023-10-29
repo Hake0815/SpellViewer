@@ -16,6 +16,7 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.Toolbar;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
                 throw new RuntimeException(e);
             }
         }
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        toolbar.setTitle(gerald.getName());
         expandableListView = findViewById(R.id.expandableListView);
         expandableListAdapter = new ExpandableListAdapter(this, gerald.getSpells());
         expandableListView.setAdapter(expandableListAdapter);
@@ -85,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateSpellListView() {
-        expandableListAdapter.updateData();
+        expandableListAdapter.filterData(0,null);
     }
 
     public void goToSpellList(View view) {
@@ -108,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 //            remove selected spell from characters spells
             gerald.removeSpell(id);
 //            Notify adapter that data has changed
-            expandableListAdapter.updateData();
+            updateSpellListView();
         }
         return true;
     }

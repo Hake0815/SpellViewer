@@ -122,6 +122,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                              View convertView, ViewGroup parent) {
         String spellName = ((Spell) getGroup(listPosition)).getName();
         SpellCat spellCat = ((Spell) getGroup(listPosition)).getSpellCat();
+        int unfilteredposition = unfilteredSpells.indexOf(getGroup(listPosition));
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -174,12 +175,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         groupViewHolder.mGroupTextLeft.setTextColor(textColor);
 
         if (withCheckMarks) {
-            groupViewHolder.mImageView.setImageResource((mGroupCheckStates[listPosition]) ? R.drawable.btn_check_on : R.drawable.btn_check_off);
+            groupViewHolder.mImageView.setImageResource((mGroupCheckStates[unfilteredposition]) ? R.drawable.btn_check_on : R.drawable.btn_check_off);
             View.OnClickListener clickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mGroupCheckStates[listPosition] = !mGroupCheckStates[listPosition];
-                    ((ImageView)v).setImageResource((mGroupCheckStates[listPosition]) ? R.drawable.btn_check_on : R.drawable.btn_check_off);
+                    mGroupCheckStates[unfilteredposition] = !mGroupCheckStates[unfilteredposition];
+                    ((ImageView)v).setImageResource((mGroupCheckStates[unfilteredposition]) ? R.drawable.btn_check_on : R.drawable.btn_check_off);
                 }
             };
             groupViewHolder.mImageView.setOnClickListener(clickListener);
@@ -207,9 +208,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
     public List<Spell> getCheckedSpells() {
         List<Spell> checkedSpells = new ArrayList<>();
-        for (int i = 0; i < getGroupCount(); i++) {
+        for (int i = 0; i < unfilteredSpells.size(); i++) {
             if (mGroupCheckStates[i]) {
-                checkedSpells.add(expandableListSpells.get(i));
+                checkedSpells.add(unfilteredSpells.get(i));
             }
         }
         return checkedSpells;
