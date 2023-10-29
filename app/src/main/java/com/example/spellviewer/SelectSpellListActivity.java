@@ -8,6 +8,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -19,16 +21,16 @@ public class SelectSpellListActivity extends AppCompatActivity {
 
     private ExpandableListView expandableListView;
     private ExpandableListAdapter expandableListAdapter;
-    private static Activity activity;
-    public static Activity getActivityOfSelectSpellListActivity(){
-        return activity;
-    }
+//    private static Activity activity;
+//    public static Activity getActivityOfSelectSpellListActivity(){
+//        return activity;
+//    }
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activity = this;
+//        activity = this;
         setContentView(R.layout.activity_select_spell_list);
 //        Setup for drop down menus
 //        Get String arrays from resources
@@ -47,6 +49,9 @@ public class SelectSpellListActivity extends AppCompatActivity {
         TextInputLayout textInputLayoutLeft = findViewById(R.id.textInputLayoutLeft);
         TextInputLayout textInputLayoutRight = findViewById(R.id.textInputLayoutRight);
 
+//        Set toolbar title
+        TextView toolbarTitle = findViewById(R.id.toolbarTextView);
+        toolbarTitle.setText(getString(R.string.allSpellsList));
 
 
 //        Setup of Expanded List View

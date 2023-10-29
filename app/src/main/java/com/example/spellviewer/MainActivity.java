@@ -16,7 +16,7 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.Toolbar;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,14 +50,12 @@ public class MainActivity extends AppCompatActivity {
                 gerald = (Character) is.readObject();
                 is.close();
                 fis.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
+            } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        toolbar.setTitle(gerald.getName());
+        TextView title = findViewById(R.id.toolbarTextView);
+        title.setText(gerald.getName());
         expandableListView = findViewById(R.id.expandableListView);
         expandableListAdapter = new ExpandableListAdapter(this, gerald.getSpells());
         expandableListView.setAdapter(expandableListAdapter);

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">SpellViewer</string>
     <string name="addSpellButton">Zauber zur Liste hinzufügen</string>
+    <string name="allSpellsList">Liste aller verfügbaren Zauber</string>
     <string name="delete">Löschen</string>
     <string name="confirmSpellsButton">Zauber hinzufügen</string>
     <string name="standardAction">Standardaktion</string>
