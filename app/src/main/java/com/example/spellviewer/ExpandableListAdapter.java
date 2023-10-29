@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import androidx.core.content.res.ResourcesCompat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,8 +22,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private final Context context;
     private List<Spell> expandableListSpells;
     private final boolean withCheckMarks;
-    //private HashMap<String, List<String>> expandableListDetail;
-
+    private GroupViewHolder groupViewHolder;
+    private boolean[] mGroupCheckStates;
     public ExpandableListAdapter(Context context, List<Spell> expandableListSpells) {
         this.context = context;
         this.expandableListSpells = expandableListSpells;
@@ -32,11 +34,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         this.context = context;
         this.expandableListSpells = expandableListSpells;
         this.withCheckMarks = withCheckMarks;
+        mGroupCheckStates = new boolean[getGroupCount()];
     }
 
     public void updateSpellList(List<Spell> newSpells) {
         this.expandableListSpells = newSpells;
         notifyDataSetChanged();
+        mGroupCheckStates = new boolean[getGroupCount()];
     }
 
     public void updateData(){
@@ -114,20 +118,34 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            groupViewHolder = new GroupViewHolder();
             if (withCheckMarks){
                 convertView = layoutInflater.inflate(R.layout.parent_withcheckmarks, null);
+                groupViewHolder.mImageView = (ImageView) convertView
+                        .findViewById(R.id.imageView);
             } else {
                 convertView = layoutInflater.inflate(R.layout.parent, null);
             }
+            groupViewHolder.mGroupTextLeft = (TextView) convertView
+                    .findViewById(R.id.textViewLeft);
+            groupViewHolder.mGroupTextRight = (TextView) convertView
+                    .findViewById(R.id.textViewRight);
+            if (withCheckMarks){
+                convertView.setTag(R.layout.parent_withcheckmarks,groupViewHolder);
+            } else {
+                convertView.setTag(R.layout.parent,groupViewHolder);
+            }
+        } else {
+            if (withCheckMarks) {
+                groupViewHolder = (GroupViewHolder) convertView.getTag(R.layout.parent_withcheckmarks);
+            } else {
+                groupViewHolder = (GroupViewHolder) convertView.getTag(R.layout.parent);
+            }
         }
-        TextView nameTextView = convertView
-                .findViewById(R.id.textViewLeft);
-        nameTextView.setTypeface(null, Typeface.BOLD);
-        nameTextView.setText(spellName);
-        TextView catTextView = convertView
-                .findViewById(R.id.textViewRight);
-        catTextView.setTypeface(null, Typeface.BOLD);
-        catTextView.setText(spellCat.toString());
+        groupViewHolder.mGroupTextLeft.setTypeface(null, Typeface.BOLD);
+        groupViewHolder.mGroupTextLeft.setText(spellName);
+        groupViewHolder.mGroupTextRight.setTypeface(null, Typeface.BOLD);
+        groupViewHolder.mGroupTextRight.setText(spellCat.toString());
         int textColor;
         switch (spellCat) {
             case Enchantment:
@@ -145,8 +163,20 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             default:
                 textColor = ResourcesCompat.getColor(MainActivity.resources,R.color.text,null);
         }
-        catTextView.setTextColor(textColor);
-        nameTextView.setTextColor(textColor);
+        groupViewHolder.mGroupTextRight.setTextColor(textColor);
+        groupViewHolder.mGroupTextLeft.setTextColor(textColor);
+
+        if (withCheckMarks) {
+            groupViewHolder.mImageView.setImageResource((mGroupCheckStates[listPosition]) ? R.drawable.btn_check_on : R.drawable.btn_check_off);
+            View.OnClickListener clickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mGroupCheckStates[listPosition] = !mGroupCheckStates[listPosition];
+                    ((ImageView)v).setImageResource((mGroupCheckStates[listPosition]) ? R.drawable.btn_check_on : R.drawable.btn_check_off);
+                }
+            };
+            groupViewHolder.mImageView.setOnClickListener(clickListener);
+        }
 
         return convertView;
     }
@@ -161,5 +191,20 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+    public final class GroupViewHolder {
 
+        TextView mGroupTextLeft;
+        TextView mGroupTextRight;
+        ImageView mImageView;
+    }
+
+    public List<Spell> getCheckedSpells() {
+        List<Spell> checkedSpells = new ArrayList<>();
+        for (int i = 0; i < getGroupCount(); i++) {
+            if (mGroupCheckStates[i]) {
+                checkedSpells.add(expandableListSpells.get(i));
+            }
+        }
+        return checkedSpells;
+    }
 }
