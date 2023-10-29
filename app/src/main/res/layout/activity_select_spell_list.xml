@@ -7,14 +7,61 @@
     tools:context="com.example.spellviewer.SelectSpellListActivity"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8pt">
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:id="@+id/textInputLayoutLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_weight="1">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextViewLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:textColor="@color/text_light"
+                android:background="@color/background_light"
+                android:text="@string/allRanks" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:id="@+id/textInputLayoutRight"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:layout_weight="1">
+
+            <AutoCompleteTextView
+                android:id="@+id/autoCompleteTextViewRight"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="none"
+                android:textColor="@color/text_light"
+                android:background="@color/background_light"
+                android:gravity="center_vertical"
+                android:text="@string/allCats" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
     <ExpandableListView
         android:id="@+id/expandableListView"
         android:groupIndicator="@null"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="0dp"
+        android:layout_height="match_parent"
+        android:paddingTop="10pt"
         android:divider="#A4C739"
         android:dividerHeight="1.0dp"
         android:childDivider="#A4C739"
@@ -26,6 +73,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/confirmSpellsButton"
-        android:onClick="confirmSpells"/>
+        android:onClick="confirmSpells"
+        android:layout_gravity="right"/>
 
 </LinearLayout>

@@ -2,8 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="background">#FF303030</color>
+    <color name="background_light">#FFB3B3B3</color>
     <color name="white">#FFFFFFFF</color>
     <color name="text">#FFFFFFFF</color>
+    <color name="text_light">#FF000000</color>
     <color name="enchantment">#FFBB86FC</color>
     <color name="summoning">#FFF0F70E</color>
     <color name="destruction">#FFE50000</color>

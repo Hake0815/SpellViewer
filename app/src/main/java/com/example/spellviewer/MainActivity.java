@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                             Collections.sort(gerald.getSpells());
                         }
-
                         updateSpellListView();
                     }
                 });

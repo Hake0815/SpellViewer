@@ -21,24 +21,31 @@ import java.util.List;
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private final Context context;
     private List<Spell> expandableListSpells;
+    private List<Spell> unfilteredSpells;
     private final boolean withCheckMarks;
     private GroupViewHolder groupViewHolder;
     private boolean[] mGroupCheckStates;
-    public ExpandableListAdapter(Context context, List<Spell> expandableListSpells) {
+    public ExpandableListAdapter(Context context, List<Spell> spellList) {
         this.context = context;
-        this.expandableListSpells = expandableListSpells;
+        expandableListSpells = new ArrayList<>();
+        expandableListSpells.addAll(spellList);
+        unfilteredSpells = spellList;
         this.withCheckMarks = false;
     }
 
-    public ExpandableListAdapter(Context context, List<Spell> expandableListSpells,boolean withCheckMarks) {
+    public ExpandableListAdapter(Context context, List<Spell> spellList,boolean withCheckMarks) {
         this.context = context;
-        this.expandableListSpells = expandableListSpells;
+        expandableListSpells = new ArrayList<>();
+        expandableListSpells.addAll(spellList);
+        unfilteredSpells = spellList;
         this.withCheckMarks = withCheckMarks;
         mGroupCheckStates = new boolean[getGroupCount()];
     }
 
     public void updateSpellList(List<Spell> newSpells) {
-        this.expandableListSpells = newSpells;
+        unfilteredSpells = newSpells;
+        expandableListSpells.clear();
+        expandableListSpells.addAll(newSpells);
         notifyDataSetChanged();
         mGroupCheckStates = new boolean[getGroupCount()];
     }
@@ -206,5 +213,32 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             }
         }
         return checkedSpells;
+    }
+
+
+    public void filterData(int rank, SpellCat spellCat){
+        expandableListSpells.clear();
+        if (rank == 0 && spellCat == null) {
+            expandableListSpells.addAll(unfilteredSpells);
+        } else if (rank == 0) {
+            for (Spell spell : unfilteredSpells) {
+                if (spell.getSpellCat() == spellCat) {
+                    expandableListSpells.add(spell);
+                }
+            }
+        } else if (spellCat == null) {
+            for (Spell spell : unfilteredSpells) {
+                if (spell.getRank() == rank) {
+                    expandableListSpells.add(spell);
+                }
+            }
+        } else {
+            for (Spell spell : unfilteredSpells) {
+                if (spell.getRank() == rank && spell.getSpellCat() == spellCat) {
+                    expandableListSpells.add(spell);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

@@ -10,6 +10,21 @@
     <string name="rank">Rang</string>
     <string name="dc">SK</string>
     <string name="mana">Mana</string>
+    <string name="allRanks">Alle Ränge</string>
+    <string-array name="ranksDropDown">
+        <item>Alle Ränge</item>
+        <item>Rang 1</item>
+        <item>Rang 2</item>
+        <item>Rang 3</item>
+    </string-array>
+    <string name="allCats">Alle Zauberschulen</string>
+    <string-array name="spellCatDropDown">
+        <item>Alle Zauberschulen</item>
+        <item>Verzauberung</item>
+        <item>Beschwörung</item>
+        <item>Zerstörung</item>
+        <item>Veränderung</item>
+    </string-array>
     <string name="enchantment">Verzauberung</string>
     <string name="summoning">Beschwörung</string>
     <string name="destruction">Zerstörung</string>
