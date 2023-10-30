@@ -9,6 +9,7 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -37,7 +38,7 @@ public class CharacterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_character);
         Intent intent = getIntent();
         String characterName = intent.getStringExtra("characterName");
-        if (MainActivity.fileExists(getApplicationContext(),characterName)) {
+        if (MainActivity.fileExists(getApplicationContext(), characterName)) {
             try {
                 FileInputStream fis = getApplicationContext().openFileInput(characterName);
                 ObjectInputStream is = new ObjectInputStream(fis);
@@ -50,6 +51,19 @@ public class CharacterActivity extends AppCompatActivity {
         } else {
             character = new Character(characterName);
         }
+        List<CharacterImage> characters;
+        try {
+            FileInputStream fis = getApplicationContext().openFileInput("character_list");
+            ObjectInputStream is = new ObjectInputStream(fis);
+            characters = ((List<CharacterImage>) is.readObject());
+            is.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        SerialBitmap avatar = characters.get(characters.indexOf(new CharacterImage(characterName))).getImage();
+        ImageView imageView = findViewById(R.id.imageViewAvatar);
+        imageView.setImageBitmap(avatar.bitmap);
         TextView title = findViewById(R.id.toolbarTextView);
         title.setText(character.getName());
         expandableListView = findViewById(R.id.expandableListView);
@@ -66,8 +80,8 @@ public class CharacterActivity extends AppCompatActivity {
                         // There are no request codes
                         Bundle extra = result.getData().getBundleExtra("Spells");
                         spells = (ArrayList<Spell>) extra.getSerializable("Spells");
-                        for (Spell spell : spells){
-                            if (!character.getSpells().contains(spell)){
+                        for (Spell spell : spells) {
+                            if (!character.getSpells().contains(spell)) {
                                 character.addSpell(spell);
                             }
                         }

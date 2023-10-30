@@ -5,19 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 public class ListAdapter extends BaseAdapter {
-    private List<String> characters;
+    private List<CharacterImage> characters;
     private final Context context;
 
     public void updateData(){
         notifyDataSetChanged();
     }
 
-    public ListAdapter(Context context, List<String> characters) {
+    public ListAdapter(Context context, List<CharacterImage> characters) {
 
         this.characters = characters;
         this.context = context;
@@ -46,7 +47,9 @@ public class ListAdapter extends BaseAdapter {
         }
         TextView textView = (TextView) convertView
                 .findViewById(R.id.textViewName);
-        textView.setText(characters.get(position));
+        textView.setText(characters.get(position).getName());
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.imageViewAvatar);
+        imageView.setImageBitmap(characters.get(position).getImage().bitmap);
         return convertView;
     }
 }

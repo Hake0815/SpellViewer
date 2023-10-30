@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:padding="5dp"
+            android:textColor="@color/text"
+            android:text="@string/characterName" />
+
+        <EditText
+            android:id="@+id/editTextText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:ems="10"
+            android:textSize="22sp"
+            android:textColor="@color/text"
+            android:inputType="text"
+            android:text="" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:layout_weight="1">
+        <TableLayout
+            android:id="@+id/simpleTableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*">
+
+            <!-- first row of the table layout-->
+            <TableRow>
+
+                <!-- first element of the row-->
+                <com.example.spellviewer.CheckImageView
+                    android:id="@+id/imageView1"
+                    android:padding="5pt"
+                    android:src="@drawable/characterimage1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter" />
+
+                <com.example.spellviewer.CheckImageView
+                    android:id="@+id/imageView2"
+                    android:padding="5pt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/characterimage2"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"/>
+
+
+            </TableRow>
+            <TableRow>
+
+                <!-- first element of the row-->
+                <com.example.spellviewer.CheckImageView
+                    android:id="@+id/imageView3"
+                    android:padding="5pt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/characterimage3" />
+
+
+                <com.example.spellviewer.CheckImageView
+                    android:id="@+id/imageView4"
+                    android:padding="5pt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/characterimage4" />
+
+            </TableRow>
+            <TableRow>
+
+                <!-- first element of the row-->
+                <com.example.spellviewer.CheckImageView
+                    android:id="@+id/imageView5"
+                    android:padding="5pt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/characterimage5" />
+
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:id="@+id/ButtonConfirmImage"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:drawablePadding="0dp"
+        android:text="@string/confirm"
+        android:layout_gravity="end"
+        android:onClick="confirmImage"/>
+</LinearLayout>

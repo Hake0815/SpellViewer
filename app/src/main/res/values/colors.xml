@@ -10,4 +10,7 @@
     <color name="summoning">#FFF0F70E</color>
     <color name="destruction">#FFE50000</color>
     <color name="alteration">#FF0EF723</color>
+    <color name="blue">#ff0130FD</color>
+    <color name="main_color">#42315E</color>
+    <color name="light_purple">#9B24B0</color>
 </resources>

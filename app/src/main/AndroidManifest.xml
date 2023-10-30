@@ -23,6 +23,11 @@
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.SpellViewer" />
         <activity
+            android:name=".ImageSelectionActivity"
+            android:exported="false"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/Theme.SpellViewer" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
