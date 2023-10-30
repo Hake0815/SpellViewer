@@ -8,24 +8,38 @@
     tools:context="com.example.spellviewer.MainActivity"
     android:orientation="vertical">
     <include layout="@layout/toolbar"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/chooseCharacter"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@color/text"/>
+
+    <ListView
+        android:id="@+id/listView"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
     <Button
-        android:id="@+id/goToSpellsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/addSpellButton"
-        android:onClick="goToSpellList"
-        android:layout_gravity="right"/>
-
-    <ExpandableListView
-        android:id="@+id/expandableListView"
-        android:groupIndicator="@null"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="0dp"
-        android:divider="#A4C739"
-        android:dividerHeight="1.0dp"
-        android:childDivider="#A4C739"
-        android:textColor="#FF000000" />
+        android:drawableTop="@drawable/plus"
+        android:textColor="#FFFFFF"
+        android:id="@+id/ButtonTest"
+        android:paddingTop="0dp"
+        android:paddingBottom="10dp"
+        android:drawablePadding="0dp"
+        android:text="@string/createCharacter"
+        android:layout_gravity="center"
+        android:onClick="newCharacter"/>
 
 
 </LinearLayout>

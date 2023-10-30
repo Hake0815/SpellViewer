@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">SpellViewer</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="characterExists">Charakter existiert bereits!</string>
+    <string name="characterName">Charactername</string>
+    <string name="chooseCharacter">Wähle einen Charakter</string>
+    <string name="createCharacter">Charakter erstellen</string>
     <string name="addSpellButton">Zauber zur Liste hinzufügen</string>
     <string name="allSpellsList">Liste aller verfügbaren Zauber</string>
     <string name="delete">Löschen</string>
