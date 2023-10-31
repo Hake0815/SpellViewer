@@ -3,6 +3,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
     <string name="confirm">Bestätigen</string>
+    <string name="gallery">Gallerie</string>
     <string name="characterExists">Charakter existiert bereits!</string>
     <string name="characterName">Charaktername</string>
     <string name="chooseCharacter">Wähle einen Charakter</string>
