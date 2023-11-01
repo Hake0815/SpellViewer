@@ -27,6 +27,9 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity Class for the main activity
+ */
 public class MainActivity extends AppCompatActivity {
     public static Resources resources;
     private List<CharacterImage> characters;
@@ -39,8 +42,10 @@ public class MainActivity extends AppCompatActivity {
         resources = getResources();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        Set toolbar title to app name
         TextView title = findViewById(R.id.toolbarTextView);
         title.setText(R.string.app_name);
+//        Read in character list from file if it exists or create new list
         if (MainActivity.fileExists(getApplicationContext(),characterFileName)) {
             try {
                 FileInputStream fis = getApplicationContext().openFileInput(characterFileName);
@@ -54,12 +59,13 @@ public class MainActivity extends AppCompatActivity {
         } else {
             characters = new ArrayList<>();
         }
+//        Feed ListView with character list
         ListView characterListView = findViewById(R.id.listView);
         listAdapter = new ListAdapter(this, characters);
         characterListView.setAdapter(listAdapter);
 
         registerForContextMenu(characterListView);
-
+//        If Listview Item is clicked the Character Activity is launched for the clicked character
         characterListView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(MainActivity.this, CharacterActivity.class);
             intent.putExtra("characterName",characters.get(position).getName());
@@ -71,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
+//                        read character info from file
                         String tempFileName = result.getData().getStringExtra("result");
                         try {
                             FileInputStream fis = getApplicationContext().openFileInput(tempFileName);
@@ -81,8 +88,10 @@ public class MainActivity extends AppCompatActivity {
                         } catch (IOException | ClassNotFoundException e) {
                             throw new RuntimeException(e);
                         }
+//                        delete the temporary file holding character info
                         deleteFile(tempFileName);
                         updateCharacterListView();
+//                        Save character list including new character to file
                         writeCharactersToFile();
                     }
                 });
@@ -90,18 +99,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Static Method to check if a file exists in the files directory of the app
+     * @param context Application context
+     * @param filename Name of the file to be checked
+     * @return True if file exists, false if it does not
+     */
     public static boolean fileExists(Context context, String filename) {
         File file = context.getFileStreamPath(filename);
         return file != null && file.exists();
     }
 
+    /**
+     * Button method to launch the activity to create a new character
+     * @param view View that calls the method
+     */
     public void newCharacter(View view) {
         Intent intent = new Intent(this, ImageSelectionActivity.class);
         selectImageLauncher.launch(intent);
     }
 
-
+    /**
+     * Write the characters in the local characters List variable to file
+     */
     private void writeCharactersToFile() {
         try {
             FileOutputStream fos = getApplicationContext().openFileOutput(characterFileName, Context.MODE_PRIVATE);
@@ -119,6 +139,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.add(0, v.getId(), 0, resources.getString(R.string.delete));
     }
+
+
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         if (item.getTitle() == resources.getString(R.string.delete)) {
@@ -136,6 +158,9 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Method to notify the ListViewAdapter when the character List changes
+     */
     private void updateCharacterListView(){
         listAdapter.updateData();
     }

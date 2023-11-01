@@ -6,7 +6,11 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
-
+/**
+ * Extension to ImageView. CheckImageView can be selected with public void setSelected(boolean checked).
+ * If a CheckImageView is selected the background color is changed. This is only visible if padding
+ * is set greater than 0.
+ */
 @SuppressLint("AppCompatCustomView")
 public class CheckImageView extends ImageView {
 

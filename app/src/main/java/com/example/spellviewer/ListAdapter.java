@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
+/**
+ * BaseAdapter class for a ListView displaying characters
+ */
 public class ListAdapter extends BaseAdapter {
     private List<CharacterImage> characters;
     private final Context context;
@@ -18,6 +21,11 @@ public class ListAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    /**
+     * Constructor for ListAdapter
+     * @param context ActivityContext of ListView
+     * @param characters List of CharacterImage to be displayed in ListView
+     */
     public ListAdapter(Context context, List<CharacterImage> characters) {
 
         this.characters = characters;

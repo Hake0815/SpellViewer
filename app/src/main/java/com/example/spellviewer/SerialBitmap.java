@@ -7,6 +7,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 
+/**
+ * Serializable class that hold a Bitmap, for the purpose to write it to file
+ * copypast from https://stackoverflow.com/questions/6002800/android-serializable-problem
+ */
 public class SerialBitmap implements Serializable {
 
     public Bitmap bitmap;

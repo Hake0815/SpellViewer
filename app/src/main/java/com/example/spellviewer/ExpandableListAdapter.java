@@ -15,24 +15,42 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by abc on 22-Mar-18.
+ * Adapter for the ExpandableListView to display spell names and their category as the groups and
+ * their detailed description as child.
  */
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private final Context context;
+//    List of spells that are displayed after filtering
     private List<Spell> expandableListSpells;
+//    List of all spells that are available
     private List<Spell> unfilteredSpells;
+//    If set to true, the ELV will have checkboxes in each group element
     private final boolean withCheckMarks;
+//    Variable to store the state of an group element to be restored later (safety for scrolling)
     private GroupViewHolder groupViewHolder;
+//    Array to keep track of all selected spells
     private boolean[] mGroupCheckStates;
+
+    /**
+     * Constructor for ELVAdapter if checkmarks are not needed.
+     * @param context Activity context of the ExpandableListView
+     * @param spellList List of spells to be displayed
+     */
     public ExpandableListAdapter(Context context, List<Spell> spellList) {
         this.context = context;
         expandableListSpells = new ArrayList<>();
         expandableListSpells.addAll(spellList);
         unfilteredSpells = spellList;
-        this.withCheckMarks = false;
+        withCheckMarks = false;
     }
 
+    /**
+     * Constructor for ELVAdapter
+     * @param context Activity context of the ExpandableListView
+     * @param spellList List of spells to be displayed
+     * @param withCheckMarks if true, checkboxes are created for each group element
+     */
     public ExpandableListAdapter(Context context, List<Spell> spellList,boolean withCheckMarks) {
         this.context = context;
         expandableListSpells = new ArrayList<>();
@@ -42,16 +60,16 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         mGroupCheckStates = new boolean[getGroupCount()];
     }
 
+    /**
+     * Method to overide data and display it unfiltered
+     * @param newSpells new List of Spells
+     */
     public void updateSpellList(List<Spell> newSpells) {
         unfilteredSpells = newSpells;
         expandableListSpells.clear();
         expandableListSpells.addAll(newSpells);
         notifyDataSetChanged();
         mGroupCheckStates = new boolean[getGroupCount()];
-    }
-
-    public void updateData(){
-        notifyDataSetChanged();
     }
 
     @Override
@@ -69,10 +87,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                              boolean isLastChild, View convertView, ViewGroup parent) {
         final Spell spell = (Spell) getChild(listPosition, expandedListPosition);
         if (convertView == null) {
+//            If ChildView has not been created yet, it is created here
             LayoutInflater layoutInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.child, null);
         }
+//        TextView texts are set to their respective values
         TextView expandedListTextViewRank = convertView
                 .findViewById(R.id.simpleTextRank);
         TextView expandedListTextViewMana = convertView
@@ -120,10 +140,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
+//        Get the values that should be displayed in the GroupView
         String spellName = ((Spell) getGroup(listPosition)).getName();
         SpellCat spellCat = ((Spell) getGroup(listPosition)).getSpellCat();
+//        Convert the listPosition to the position in the unfiltered data, they are identical
+//        if filters are turned off
         int unfilteredposition = unfilteredSpells.indexOf(getGroup(listPosition));
         if (convertView == null) {
+//            If the view was not yet created it is created here
             LayoutInflater layoutInflater = (LayoutInflater) this.context.
                     getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             groupViewHolder = new GroupViewHolder();
@@ -134,6 +158,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             } else {
                 convertView = layoutInflater.inflate(R.layout.parent, null);
             }
+//            The the child views of the group view are stored in the groupViewHolder
             groupViewHolder.mGroupTextLeft = (TextView) convertView
                     .findViewById(R.id.textViewLeft);
             groupViewHolder.mGroupTextRight = (TextView) convertView
@@ -144,12 +169,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 convertView.setTag(R.layout.parent,groupViewHolder);
             }
         } else {
+//            retrieve the previous state of the view if it existed before
             if (withCheckMarks) {
                 groupViewHolder = (GroupViewHolder) convertView.getTag(R.layout.parent_withcheckmarks);
             } else {
                 groupViewHolder = (GroupViewHolder) convertView.getTag(R.layout.parent);
             }
         }
+//        Text of group view is set
         groupViewHolder.mGroupTextLeft.setTypeface(null, Typeface.BOLD);
         groupViewHolder.mGroupTextLeft.setText(spellName);
         groupViewHolder.mGroupTextRight.setTypeface(null, Typeface.BOLD);
@@ -175,7 +202,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         groupViewHolder.mGroupTextLeft.setTextColor(textColor);
 
         if (withCheckMarks) {
+//            Set the checkbox to the state as it is saved in mGroupCheckStates
             groupViewHolder.mImageView.setImageResource((mGroupCheckStates[unfilteredposition]) ? R.drawable.btn_check_on : R.drawable.btn_check_off);
+//            Define the onClickListener to toggle the checked state
             View.OnClickListener clickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -199,6 +228,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
+    /**
+     * Class toi store the state of a group view
+     */
     public final class GroupViewHolder {
 
         TextView mGroupTextLeft;
@@ -206,6 +238,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         ImageView mImageView;
     }
 
+    /**
+     * method to obtain the selected spells
+     * @return List that contains all spells that have been selected by clicking the checkbox
+     */
     public List<Spell> getCheckedSpells() {
         List<Spell> checkedSpells = new ArrayList<>();
         for (int i = 0; i < unfilteredSpells.size(); i++) {
@@ -216,8 +252,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         return checkedSpells;
     }
 
-
+    /**
+     * Method to filter the displayed date
+     * @param rank Rank of spells to be displayed, if set to 0 all ranks are displayed
+     * @param spellCat Spell category to be displayed, if set to null all categories are displayed
+     */
     public void filterData(int rank, SpellCat spellCat){
+//        List of displayed spells is cleared and filled afterwards with spells that fit the filter
+//        criteria
         expandableListSpells.clear();
         if (rank == 0 && spellCat == null) {
             expandableListSpells.addAll(unfilteredSpells);

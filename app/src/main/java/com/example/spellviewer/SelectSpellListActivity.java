@@ -17,20 +17,17 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * Activity class for the spell selection
+ */
 public class SelectSpellListActivity extends AppCompatActivity {
 
     private ExpandableListView expandableListView;
     private ExpandableListAdapter expandableListAdapter;
-//    private static Activity activity;
-//    public static Activity getActivityOfSelectSpellListActivity(){
-//        return activity;
-//    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        activity = this;
         setContentView(R.layout.activity_select_spell_list);
 //        Setup for drop down menus
 //        Get String arrays from resources
@@ -104,6 +101,10 @@ public class SelectSpellListActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Button method to finish the activity and pass the selected spells in intend as result
+     * @param view
+     */
     public void confirmSpells(View view) {
         List<Spell> spells = expandableListAdapter.getCheckedSpells();
         Bundle extra = new Bundle();
@@ -113,6 +114,12 @@ public class SelectSpellListActivity extends AppCompatActivity {
         setResult(Activity.RESULT_OK,intent);
         finish();
     }
+
+    /**
+     * Method to convert the strings of the Dropdown menu for the filter to integer values
+     * @param rankSelection String that should be one of the possible filter options
+     * @return Integer value of filter option
+     */
     private int rankSelectionToInt(String rankSelection){
         String[] ranks = getResources().getStringArray(R.array.ranksDropDown);
 
@@ -127,6 +134,11 @@ public class SelectSpellListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to convert the strings of the Dropdown menu for the filter to SpellCat enum
+     * @param spellCatSelection String that should be one of the possible filter options
+     * @return Enum value of filter option
+     */
     private SpellCat spellCatSelectionToSpellCat(String spellCatSelection){
         String[] spellCats = getResources().getStringArray(R.array.spellCatDropDown);
 

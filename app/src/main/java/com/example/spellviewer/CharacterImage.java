@@ -1,7 +1,9 @@
 package com.example.spellviewer;
 
 import java.io.Serializable;
-
+/**
+ * Serializable class to store character name together with an image.
+ */
 public class CharacterImage implements Serializable {
     private String name;
     private SerialBitmap image;
@@ -29,6 +31,7 @@ public class CharacterImage implements Serializable {
 
     @Override
     public boolean equals(Object o) {
+//        Two character are considered equal if they have the same name.
         if (o instanceof CharacterImage) {
             if (((CharacterImage)o).getName().equals(name)) {
                 return true;

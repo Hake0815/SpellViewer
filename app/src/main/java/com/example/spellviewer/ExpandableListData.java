@@ -6,10 +6,14 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by abc on 22-Mar-18.
+ * Class with static method to obtain all spells as List
  */
 
 public class ExpandableListData {
+    /**
+     * Static method to generate spell List
+     * @return List of spells
+     */
     public static List<Spell> getData() {
         List<Spell> spells = new ArrayList<>();
         Spell panic = new Spell(MainActivity.resources.getString(R.string.panic_name),

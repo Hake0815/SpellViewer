@@ -2,6 +2,9 @@ package com.example.spellviewer;
 
 import java.io.Serializable;
 
+/**
+ * Spell class that hold all attributes a spell can have
+ */
 public class Spell implements Comparable, Serializable {
     private final String name;
     private final String description;
