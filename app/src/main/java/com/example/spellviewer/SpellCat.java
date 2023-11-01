@@ -1,11 +1,11 @@
 package com.example.spellviewer;
 
+
 public enum SpellCat {
     Enchantment,
     Summoning,
     Destruction,
     Alteration;
-
     @Override
     public String toString() {
         switch (this) {

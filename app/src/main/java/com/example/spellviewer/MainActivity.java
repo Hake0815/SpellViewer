@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        resources = getResources();
         super.onCreate(savedInstanceState);
+        resources = this.getResources();
         setContentView(R.layout.activity_main);
 //        Set toolbar title to app name
         TextView title = findViewById(R.id.toolbarTextView);
@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     /**
      * Static Method to check if a file exists in the files directory of the app
      * @param context Application context
@@ -116,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
      */
     public void newCharacter(View view) {
         Intent intent = new Intent(this, ImageSelectionActivity.class);
+        intent.putExtra("CharacterList", characterFileName);
         selectImageLauncher.launch(intent);
     }
 
@@ -137,13 +137,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, v.getId(), 0, resources.getString(R.string.delete));
+        menu.add(0, v.getId(), 0, Resources.getSystem().getString(R.string.delete));
     }
 
 
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        if (item.getTitle() == resources.getString(R.string.delete)) {
+        if (item.getTitle() == Resources.getSystem().getString(R.string.delete)) {
 //            get the selected position
             int id = info.position;
 //            Get character name to remove its data if it exists

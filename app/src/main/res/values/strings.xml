@@ -12,19 +12,33 @@
     <string name="allSpellsList">Liste aller verfügbaren Zauber</string>
     <string name="delete">Löschen</string>
     <string name="confirmSpellsButton">Zauber hinzufügen</string>
+    <string name="spellExistsToast">Zauber mit diesem Namen existiert bereits!</string>
+    <string name="newSpell">Neuer Zauber</string>
+    <string name="createSpellsButton">Neuen Zauber erstellen</string>
     <string name="standardAction">Standardaktion</string>
+    <string name="spellName">Zaubername</string>
+    <string name="spellCat">Zauberschule</string>
     <string name="fullAction">Volle Aktion</string>
     <string name="freeAction">Freie Aktion</string>
     <string name="bonusAction">Bonusaktion</string>
     <string name="rank">Rang</string>
     <string name="dc">SK</string>
     <string name="mana">Mana</string>
+    <string name="actionType">Aktionstyp</string>
+    <string name="range">Reichweite</string>
+    <string name="duration">Dauer</string>
+    <string name="description">Beschreibung</string>
     <string name="allRanks">Alle Ränge</string>
     <string-array name="ranksDropDown">
         <item>Alle Ränge</item>
         <item>Rang 1</item>
         <item>Rang 2</item>
         <item>Rang 3</item>
+    </string-array>
+    <string-array name="ranksDropDownNumber">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
     </string-array>
     <string name="allCats">Alle Zauberschulen</string>
     <string-array name="spellCatDropDown">
@@ -33,6 +47,12 @@
         <item>Beschwörung</item>
         <item>Zerstörung</item>
         <item>Veränderung</item>
+    </string-array>
+    <string-array name="actionDropDown">
+        <item>Standardaktion</item>
+        <item>Bonusaktion</item>
+        <item>Freie Aktion</item>
+        <item>Volle Aktion</item>
     </string-array>
     <string name="enchantment">Verzauberung</string>
     <string name="summoning">Beschwörung</string>

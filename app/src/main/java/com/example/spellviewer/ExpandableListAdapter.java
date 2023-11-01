@@ -69,6 +69,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         expandableListSpells.clear();
         expandableListSpells.addAll(newSpells);
         notifyDataSetChanged();
+        expandableListSpells.size();
         mGroupCheckStates = new boolean[getGroupCount()];
     }
 
@@ -205,12 +206,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 //            Set the checkbox to the state as it is saved in mGroupCheckStates
             groupViewHolder.mImageView.setImageResource((mGroupCheckStates[unfilteredposition]) ? R.drawable.btn_check_on : R.drawable.btn_check_off);
 //            Define the onClickListener to toggle the checked state
-            View.OnClickListener clickListener = new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mGroupCheckStates[unfilteredposition] = !mGroupCheckStates[unfilteredposition];
-                    ((ImageView)v).setImageResource((mGroupCheckStates[unfilteredposition]) ? R.drawable.btn_check_on : R.drawable.btn_check_off);
-                }
+            View.OnClickListener clickListener = v -> {
+                mGroupCheckStates[unfilteredposition] = !mGroupCheckStates[unfilteredposition];
+                ((ImageView)v).setImageResource((mGroupCheckStates[unfilteredposition]) ? R.drawable.btn_check_on : R.drawable.btn_check_off);
             };
             groupViewHolder.mImageView.setOnClickListener(clickListener);
         }

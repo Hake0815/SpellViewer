@@ -1,6 +1,7 @@
 package com.example.spellviewer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,10 +11,17 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,6 +32,9 @@ public class SelectSpellListActivity extends AppCompatActivity {
 
     private ExpandableListView expandableListView;
     private ExpandableListAdapter expandableListAdapter;
+    private ActivityResultLauncher<Intent> spellCreatorLauncher;
+    private List<Spell> spells;
+    private final String spellListFile = "spell_list";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,59 +62,77 @@ public class SelectSpellListActivity extends AppCompatActivity {
         toolbarTitle.setText(getString(R.string.allSpellsList));
 
 
+//        Read Spells from file, if it does not exist create the default spells
+        if (MainActivity.fileExists(getApplicationContext(), spellListFile)) {
+            try {
+                FileInputStream fis = getApplicationContext().openFileInput(spellListFile);
+                ObjectInputStream is = new ObjectInputStream(fis);
+                spells = (List<Spell>) is.readObject();
+                is.close();
+                fis.close();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            spells = ExpandableListData.getData();
+            writeSpellsToFile();
+        }
 //        Setup of Expanded List View
         expandableListView =  findViewById(R.id.expandableListView);
-        List<Spell> spells = ExpandableListData.getData();
         expandableListAdapter = new ExpandableListAdapter(this, spells,true);
         expandableListView.setAdapter(expandableListAdapter);
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-            }
+        expandableListView.setOnGroupExpandListener(groupPosition -> {
         });
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-
-            }
+        expandableListView.setOnGroupCollapseListener(groupPosition -> {
 
         });
 
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition,
-                                        long id) {
-                return false;
-            }
-        });
+        expandableListView.setOnGroupClickListener((parent, v, groupPosition, id) -> false);
 //        Apply the filter when selected
-        autoCompleteTextViewLeft.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        autoCompleteTextViewLeft.setOnItemClickListener((parent, view, position, id) -> {
 //                Get the selection of the spell category
-                String catSelection = textInputLayoutRight.getEditText().getText().toString();
+            String catSelection = textInputLayoutRight.getEditText().getText().toString();
 //                Get selected rank
-                String rankSelection = arrayRanksAdapter.getItem(position).toString();
-                expandableListAdapter.filterData(rankSelectionToInt(rankSelection), spellCatSelectionToSpellCat(catSelection));
-            }
+            String rankSelection = arrayRanksAdapter.getItem(position).toString();
+            expandableListAdapter.filterData(rankSelectionToInt(rankSelection), spellCatSelectionToSpellCat(catSelection));
         });
-        autoCompleteTextViewRight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        autoCompleteTextViewRight.setOnItemClickListener((parent, view, position, id) -> {
 //                Get the selection of the spell category
-                String rankSelection = textInputLayoutLeft.getEditText().getText().toString();
+            String rankSelection = textInputLayoutLeft.getEditText().getText().toString();
 //                Get selected rank
-                String catSelection = arraySpellCatsAdapter.getItem(position).toString();
-                expandableListAdapter.filterData(rankSelectionToInt(rankSelection), spellCatSelectionToSpellCat(catSelection));
-            }
+            String catSelection = arraySpellCatsAdapter.getItem(position).toString();
+            expandableListAdapter.filterData(rankSelectionToInt(rankSelection), spellCatSelectionToSpellCat(catSelection));
         });
+
+        spellCreatorLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    Spell newSpell;
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // The created spell is obtained here
+                        assert result.getData() != null;
+                        Bundle extra = result.getData().getBundleExtra("NewSpell");
+                        assert extra != null;
+                        newSpell = (Spell) extra.getSerializable("NewSpell");
+
+                        spells.add(newSpell);
+//                        Update ELV with selected filters
+                        expandableListAdapter = new ExpandableListAdapter(getApplicationContext(), spells,true);
+                        expandableListView.setAdapter(expandableListAdapter);
+//                        Get selected Spell category
+                        String catSelection = textInputLayoutRight.getEditText().getText().toString();
+//                        Get selected rank
+                        String rankSelection = textInputLayoutLeft.getEditText().getText().toString();
+                        expandableListAdapter.filterData(rankSelectionToInt(rankSelection), spellCatSelectionToSpellCat(catSelection));
+                        writeSpellsToFile();
+                    }
+                });
 
     }
 
     /**
      * Button method to finish the activity and pass the selected spells in intend as result
-     * @param view
+     * @param view View that calls this method
      */
     public void confirmSpells(View view) {
         List<Spell> spells = expandableListAdapter.getCheckedSpells();
@@ -116,13 +145,21 @@ public class SelectSpellListActivity extends AppCompatActivity {
     }
 
     /**
+     * Button method to go to the spell creation activity
+     * @param view View that calls this method
+     */
+    public void createSpell(View view) {
+        Intent intent = new Intent(this, SpellCreationActivity.class);
+        spellCreatorLauncher.launch(intent);
+    }
+
+    /**
      * Method to convert the strings of the Dropdown menu for the filter to integer values
      * @param rankSelection String that should be one of the possible filter options
      * @return Integer value of filter option
      */
     private int rankSelectionToInt(String rankSelection){
         String[] ranks = getResources().getStringArray(R.array.ranksDropDown);
-
         if (rankSelection.equals(ranks[1])) {
             return 1;
         } else if (rankSelection.equals(ranks[2])) {
@@ -139,8 +176,8 @@ public class SelectSpellListActivity extends AppCompatActivity {
      * @param spellCatSelection String that should be one of the possible filter options
      * @return Enum value of filter option
      */
-    private SpellCat spellCatSelectionToSpellCat(String spellCatSelection){
-        String[] spellCats = getResources().getStringArray(R.array.spellCatDropDown);
+    public static SpellCat spellCatSelectionToSpellCat(String spellCatSelection){
+        String[] spellCats = MainActivity.resources.getStringArray(R.array.spellCatDropDown);
 
         if (spellCatSelection.equals(spellCats[1])) {
             return SpellCat.Enchantment;
@@ -152,6 +189,18 @@ public class SelectSpellListActivity extends AppCompatActivity {
             return SpellCat.Alteration;
         } else {
             return null;
+        }
+    }
+
+    private void writeSpellsToFile() {
+        try {
+            FileOutputStream fos = getApplicationContext().openFileOutput(spellListFile, Context.MODE_PRIVATE);
+            ObjectOutputStream os = new ObjectOutputStream(fos);
+            os.writeObject(spells);
+            os.close();
+            fos.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -70,12 +70,26 @@
         android:layout_weight="1"
         android:textColor="#FF000000"/>
 
-    <Button
-        android:id="@+id/confirm_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/confirmSpellsButton"
-        android:onClick="confirmSpells"
-        android:layout_gravity="end"/>
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/create_spell_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/small_white_plus"
+            android:text="@string/createSpellsButton"
+            android:onClick="createSpell"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/confirm_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableTop="@drawable/white_check"
+            android:text="@string/confirmSpellsButton"
+            android:onClick="confirmSpells"
+            android:layout_weight="1"/>
+    </LinearLayout>
 
 </LinearLayout>

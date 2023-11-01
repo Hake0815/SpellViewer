@@ -16,16 +16,18 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,9 +37,12 @@ public class ImageSelectionActivity extends AppCompatActivity {
     private CheckImageView selectedImageView;
     private SerialBitmap imageFromGallery;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+    private String characterFileName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        Get file name with character list
+        characterFileName = getIntent().getStringExtra("CharacterList");
         setContentView(R.layout.activity_image_selection);
         TableLayout tableLayout = findViewById(R.id.simpleTableLayout);
         selectedImageView = null;
@@ -123,23 +128,39 @@ public class ImageSelectionActivity extends AppCompatActivity {
 //            Resize the image to device size, note all images are squares
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-            SerialBitmap serialImage = new SerialBitmap(getResizedBitmap(image,displayMetrics.widthPixels,displayMetrics.widthPixels));
-            characterImage = new CharacterImage(name,serialImage);
+            SerialBitmap serialImage = new SerialBitmap(getResizedBitmap(image, displayMetrics.widthPixels, displayMetrics.widthPixels));
+            characterImage = new CharacterImage(name, serialImage);
         }
-//        Write the result as character to file
+//        Check if Character exists already
+        List<CharacterImage> characters;
         try {
-            FileOutputStream fos = getApplicationContext().openFileOutput("tempFile", Context.MODE_PRIVATE);
-            ObjectOutputStream os = new ObjectOutputStream(fos);
-            os.writeObject(characterImage);
-            os.close();
-            fos.close();
-        } catch (IOException e) {
+            FileInputStream fis = getApplicationContext().openFileInput(characterFileName);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            characters = (List<CharacterImage>) is.readObject();
+            is.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+        if (characters.contains(characterImage)) {
+            Toast.makeText(this, getResources().getString(R.string.characterExists),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+//        Write the result as character to file
+            try {
+                FileOutputStream fos = getApplicationContext().openFileOutput("tempFile", Context.MODE_PRIVATE);
+                ObjectOutputStream os = new ObjectOutputStream(fos);
+                os.writeObject(characterImage);
+                os.close();
+                fos.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 //        Pass the file name as result to previous activity.
         Intent intent = new Intent();
         intent.putExtra("result", "tempFile");
-        setResult(Activity.RESULT_OK,intent);
+        setResult(Activity.RESULT_OK, intent);
         finish();
     }
 
