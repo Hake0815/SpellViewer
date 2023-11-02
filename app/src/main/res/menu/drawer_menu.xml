@@ -18,5 +18,10 @@
         android:icon="@drawable/baseline_arrow_circle_down_24"
         android:title="@string/openRules"
         android:onClick="openRules"/>
+    <item
+        android:id="@+id/newestVersion"
+        android:icon="@drawable/baseline_arrow_circle_down_24"
+        android:title="@string/newestVersion"
+        android:onClick="linkAPK"/>
 
 </menu>

@@ -138,6 +138,15 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(intent);
     }
+    /**
+     * Open Link to APK
+     * @param item Item that triggered method call
+     */
+    public void linkAPK(MenuItem item) {
+        Uri uri = Uri.parse("https://github.com/Hake0815/SpellViewer/blob/master/app/release/SpellViewer.apk"); // missing 'http://' will cause crashed
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
     public void goToMain(MenuItem item) {
     }
 
