@@ -4,16 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -23,23 +27,31 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Activity class for the spell selection
  */
 public class SelectSpellListActivity extends AppCompatActivity {
+    static {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+    }
 
     private ExpandableListView expandableListView;
     private ExpandableListAdapter expandableListAdapter;
     private ActivityResultLauncher<Intent> spellCreatorLauncher;
     private List<Spell> spells;
     private final String spellListFile = "spell_list";
+    private TextInputLayout textInputLayoutLeft;
+    private TextInputLayout textInputLayoutRight;
+    private String mode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_spell_list);
+        mode = getIntent().getStringExtra("Mode");
 //        Setup for drop down menus
 //        Get String arrays from resources
         String[] ranks = getResources().getStringArray(R.array.ranksDropDown);
@@ -54,13 +66,24 @@ public class SelectSpellListActivity extends AppCompatActivity {
         autoCompleteTextViewLeft.setAdapter(arrayRanksAdapter);
         autoCompleteTextViewRight.setAdapter(arraySpellCatsAdapter);
 //        Find TextInput Layouts to obtain texts
-        TextInputLayout textInputLayoutLeft = findViewById(R.id.textInputLayoutLeft);
-        TextInputLayout textInputLayoutRight = findViewById(R.id.textInputLayoutRight);
+        textInputLayoutLeft = findViewById(R.id.textInputLayoutLeft);
+        textInputLayoutRight = findViewById(R.id.textInputLayoutRight);
 
-//        Set toolbar title
+//        Set toolbar
         TextView toolbarTitle = findViewById(R.id.toolbarTextView);
         toolbarTitle.setText(getString(R.string.allSpellsList));
+        ImageView toolbarImage = findViewById(R.id.toolbarImagaView);
+        toolbarImage.setImageDrawable(getResources().getDrawable(R.drawable.baseline_arrow_back_24,null));
 
+        if (mode.equals("DisplayOnly")) {
+            toolbarImage.setOnClickListener(v -> finish());
+        } else {
+            toolbarImage.setOnClickListener(v -> {
+                Intent intent = new Intent();
+                setResult(Activity.RESULT_CANCELED,intent);
+                finish();
+            });
+        }
 
 //        Read Spells from file, if it does not exist create the default spells
         if (MainActivity.fileExists(getApplicationContext(), spellListFile)) {
@@ -79,7 +102,14 @@ public class SelectSpellListActivity extends AppCompatActivity {
         }
 //        Setup of Expanded List View
         expandableListView =  findViewById(R.id.expandableListView);
-        expandableListAdapter = new ExpandableListAdapter(this, spells,true);
+        if (mode.equals("DisplayOnly")) {
+            expandableListAdapter = new ExpandableListAdapter(this, spells);
+            Button confirmButton = findViewById(R.id.confirm_button);
+            confirmButton.setEnabled(false);
+            confirmButton.setVisibility(View.GONE);
+        } else {
+            expandableListAdapter = new ExpandableListAdapter(this, spells,true);
+        }
         expandableListView.setAdapter(expandableListAdapter);
         expandableListView.setOnGroupExpandListener(groupPosition -> {
         });
@@ -104,6 +134,9 @@ public class SelectSpellListActivity extends AppCompatActivity {
             expandableListAdapter.filterData(rankSelectionToInt(rankSelection), spellCatSelectionToSpellCat(catSelection));
         });
 
+//        Long clicks on Items in the ELV open context Menu
+        registerForContextMenu(expandableListView);
+
         spellCreatorLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -116,19 +149,41 @@ public class SelectSpellListActivity extends AppCompatActivity {
                         newSpell = (Spell) extra.getSerializable("NewSpell");
 
                         spells.add(newSpell);
+                        Collections.sort(spells);
 //                        Update ELV with selected filters
-                        expandableListAdapter = new ExpandableListAdapter(getApplicationContext(), spells,true);
-                        expandableListView.setAdapter(expandableListAdapter);
-//                        Get selected Spell category
-                        String catSelection = textInputLayoutRight.getEditText().getText().toString();
-//                        Get selected rank
-                        String rankSelection = textInputLayoutLeft.getEditText().getText().toString();
-                        expandableListAdapter.filterData(rankSelectionToInt(rankSelection), spellCatSelectionToSpellCat(catSelection));
+                        if (mode.equals("SelectMode")) {
+                            expandableListAdapter = new ExpandableListAdapter(getApplicationContext(), spells, true);
+                            expandableListView.setAdapter(expandableListAdapter);
+                        }
+                        filterData();
                         writeSpellsToFile();
                     }
                 });
 
     }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, v.getId(), 0, getResources().getString(R.string.delete));
+
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo)item.getMenuInfo();
+//        If the delete option is selected the respective item is removed from the spell list
+//        and also from the ELV
+        if (item.getTitle() == getResources().getString(R.string.delete)) {
+//            get the selected group position
+            int id = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+//            remove selected spell from spells and file
+            spells.remove(id);
+            writeSpellsToFile();
+//            Notify adapter that data has changed
+            filterData();
+        }
+        return true;
+    }
+
 
     /**
      * Button method to finish the activity and pass the selected spells in intend as result
@@ -150,6 +205,7 @@ public class SelectSpellListActivity extends AppCompatActivity {
      */
     public void createSpell(View view) {
         Intent intent = new Intent(this, SpellCreationActivity.class);
+        intent.putExtra("Mode", "NewSpell");
         spellCreatorLauncher.launch(intent);
     }
 
@@ -192,6 +248,9 @@ public class SelectSpellListActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Method to write the spells list to file.
+     */
     private void writeSpellsToFile() {
         try {
             FileOutputStream fos = getApplicationContext().openFileOutput(spellListFile, Context.MODE_PRIVATE);
@@ -202,5 +261,16 @@ public class SelectSpellListActivity extends AppCompatActivity {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Method to filter the data according to the selected filters in the autoCompleteTextViews
+     */
+    private void filterData(){
+//                        Get selected Spell category
+        String catSelection = textInputLayoutRight.getEditText().getText().toString();
+//                        Get selected rank
+        String rankSelection = textInputLayoutLeft.getEditText().getText().toString();
+        expandableListAdapter.filterData(rankSelectionToInt(rankSelection), spellCatSelectionToSpellCat(catSelection));
     }
 }

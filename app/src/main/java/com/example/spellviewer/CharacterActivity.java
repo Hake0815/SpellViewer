@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -17,11 +18,11 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,6 +34,7 @@ public class CharacterActivity extends AppCompatActivity {
     private ExpandableListAdapter expandableListAdapter;
     private Character character;
     private ActivityResultLauncher<Intent> selectSpellListLauncher;
+    private ActivityResultLauncher<Intent> spellCreatorLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +106,23 @@ public class CharacterActivity extends AppCompatActivity {
 //                    Notify the ELVAdapter that the data has changed.
                     updateSpellListView();
                 });
+        spellCreatorLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    Spell modifiedSpell;
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // The created spell is obtained here
+                        assert result.getData() != null;
+                        Bundle extra = result.getData().getBundleExtra("NewSpell");
+                        assert extra != null;
+                        modifiedSpell = (Spell) extra.getSerializable("NewSpell");
+                        character.removeSpell(character.getSpells().indexOf(modifiedSpell));
+                        character.addSpell(modifiedSpell);
+                        Collections.sort(character.getSpells());
+//                        Notify the ELVAdapter that the data has changed.
+                        updateSpellListView();
+                    }
+                });
 
     }
     /**
@@ -120,13 +139,15 @@ public class CharacterActivity extends AppCompatActivity {
      */
     public void goToSpellList(View view) {
         Intent intent = new Intent(this, SelectSpellListActivity.class);
+        intent.putExtra("Mode", "SelectMode");
         selectSpellListLauncher.launch(intent);
     }
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, v.getId(), 0, getResources().getString(R.string.delete));
+        menu.add(Menu.NONE, v.getId(), 0, getResources().getString(R.string.modify));
+        menu.add(Menu.NONE, v.getId(), 1, getResources().getString(R.string.delete));
 
     }
     @Override
@@ -134,6 +155,18 @@ public class CharacterActivity extends AppCompatActivity {
         ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo)item.getMenuInfo();
 //        If the delete option is selected the respective item is removed from the characters spell list
 //        and also from the ELV
+        if (item.getTitle() == getResources().getString(R.string.modify)) {
+//            get the selected group position
+            int id = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+//            Spell to be modified
+            Spell modSpell = character.getSpells().get(id);
+            Bundle extra = new Bundle();
+            extra.putSerializable("ModSpell", (Serializable) modSpell);
+            Intent intent = new Intent(this, SpellCreationActivity.class);
+            intent.putExtra("ModSpell", extra);
+            intent.putExtra("Mode", "ModifySpell");
+            spellCreatorLauncher.launch(intent);
+        }
         if (item.getTitle() == getResources().getString(R.string.delete)) {
 //            get the selected group position
             int id = ExpandableListView.getPackedPositionGroup(info.packedPosition);

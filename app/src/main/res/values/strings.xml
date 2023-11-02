@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">SpellViewer</string>
+    <string name="home">Charakterauswahl</string>
+    <string name="spellList">Zauberliste</string>
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
     <string name="confirm">Bestätigen</string>
@@ -11,9 +13,11 @@
     <string name="addSpellButton">Zauber zur Liste hinzufügen</string>
     <string name="allSpellsList">Liste aller verfügbaren Zauber</string>
     <string name="delete">Löschen</string>
+    <string name="modify">Bearbeiten</string>
     <string name="confirmSpellsButton">Zauber hinzufügen</string>
     <string name="spellExistsToast">Zauber mit diesem Namen existiert bereits!</string>
     <string name="newSpell">Neuer Zauber</string>
+    <string name="modSpell">&#160;bearbeiten</string>
     <string name="createSpellsButton">Neuen Zauber erstellen</string>
     <string name="standardAction">Standardaktion</string>
     <string name="spellName">Zaubername</string>

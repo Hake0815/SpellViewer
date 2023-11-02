@@ -25,13 +25,42 @@ import java.util.List;
  * Activity class for spell creator
  */
 public class SpellCreationActivity extends AppCompatActivity {
+    private String mode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_spell);
-//        Set the toolbar title
+        mode = getIntent().getStringExtra("Mode");
         TextView toolbarTitle = findViewById(R.id.toolbarTextView);
-        toolbarTitle.setText(getString(R.string.newSpell));
+        if (mode.equals("NewSpell")) {
+//            A new Spell should be create
+//            Set the toolbar title
+            toolbarTitle.setText(getString(R.string.newSpell));
+        } else if (mode.equals("ModifySpell")) {
+//            Get the spell from intent
+            Bundle extra = getIntent().getBundleExtra("ModSpell");
+            Spell modSpell = (Spell) extra.getSerializable("ModSpell");
+            toolbarTitle.setText(modSpell.getName() + getResources().getString(R.string.modSpell));
+            TextInputLayout textInputLayoutRank = findViewById(R.id.textInputLayoutRank);
+            TextInputLayout textInputLayoutSpellCat = findViewById(R.id.textInputLayoutSpellCat);
+            TextInputLayout textInputLayoutAction = findViewById(R.id.textInputLayoutAction);
+            EditText editTextName = findViewById(R.id.editTextName);
+            EditText editTextDescription = findViewById(R.id.editTextDescription);
+            EditText editTextDC = findViewById(R.id.editTextDC);
+            EditText editTextDuration = findViewById(R.id.editTextDuration);
+            EditText editTextMana = findViewById(R.id.editTextMana);
+            EditText editTextRange = findViewById(R.id.editTextRange);
+            editTextRange.setText(modSpell.getRange());
+            editTextDC.setText(modSpell.getDc());
+            editTextDuration.setText(modSpell.getDuration());
+            editTextDescription.setText(modSpell.getDescription());
+            editTextMana.setText(modSpell.getManaCost());
+            editTextName.setText(modSpell.getName());
+            textInputLayoutRank.getEditText().setText(String.valueOf(modSpell.getRank()));
+            textInputLayoutAction.getEditText().setText(modSpell.getActionCost().toString());
+            textInputLayoutSpellCat.getEditText().setText(modSpell.getSpellCat().toString());
+        }
+
 
 //        Setup for drop down menus
 //        Get String arrays from resources
@@ -81,25 +110,26 @@ public class SpellCreationActivity extends AppCompatActivity {
 
         Spell newSpell = new Spell(spellName, spellDescription, spellRank, spellMana, spellDC,
                 spellAction, spellRange, spellDuration, spellCat);
-
-        if (MainActivity.fileExists(getApplicationContext(), "spell_list")) {
-            List<Spell> spells;
-            try {
-                FileInputStream fis = getApplicationContext().openFileInput("spell_list");
-                ObjectInputStream is = new ObjectInputStream(fis);
-                spells = (List<Spell>) is.readObject();
-                is.close();
-                fis.close();
-            } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            if (spells.contains(newSpell)) {
-                Toast.makeText(this, getResources().getString(R.string.spellExistsToast),
-                        Toast.LENGTH_LONG).show();
-                return;
+        if (mode.equals("NewSpell")) {
+//            Check if Spell with the same name already exists
+            if (MainActivity.fileExists(getApplicationContext(), "spell_list")) {
+                List<Spell> spells;
+                try {
+                    FileInputStream fis = getApplicationContext().openFileInput("spell_list");
+                    ObjectInputStream is = new ObjectInputStream(fis);
+                    spells = (List<Spell>) is.readObject();
+                    is.close();
+                    fis.close();
+                } catch (IOException | ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+                if (spells.contains(newSpell)) {
+                    Toast.makeText(this, getResources().getString(R.string.spellExistsToast),
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
             }
         }
-
         Bundle extra = new Bundle();
         extra.putSerializable("NewSpell", (Serializable) newSpell);
         Intent intent = new Intent();

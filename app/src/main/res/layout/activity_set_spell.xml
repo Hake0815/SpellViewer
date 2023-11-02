@@ -14,14 +14,14 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:measureWithLargestChild="true"
         android:stretchColumns="1">
         <TableRow
 
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dip">
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip">
 
         <!-- first element of the row-->
             <TextView
@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dip"
-                android:paddingEnd="20dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/text"
                 android:textSize="16sp"
                 android:layout_gravity="center_vertical"
@@ -39,6 +39,8 @@
                 android:id="@+id/editTextName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="11dp"
                 android:inputType="text"
                 android:text=""
                 android:textColor="@color/text"
@@ -51,7 +53,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dip">
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip">
 
             <!-- first element of the row-->
             <TextView
@@ -59,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dip"
-                android:paddingEnd="20dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/text"
                 android:textSize="16sp"
                 android:layout_gravity="center_vertical"
@@ -90,7 +93,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dip">
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip">
 
             <!-- first element of the row-->
             <TextView
@@ -98,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dip"
-                android:paddingEnd="20dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/text"
                 android:textSize="16sp"
                 android:layout_gravity="center_vertical"
@@ -128,7 +132,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dip">
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip">
 
             <!-- first element of the row-->
             <TextView
@@ -136,7 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dip"
-                android:paddingEnd="20dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/text"
                 android:textSize="16sp"
                 android:layout_gravity="center_vertical"
@@ -146,6 +151,8 @@
                 android:id="@+id/editTextMana"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="11dp"
                 android:inputType="text"
                 android:text=""
                 android:textSize="16sp"
@@ -157,7 +164,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dip">
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip">
 
             <!-- first element of the row-->
             <TextView
@@ -165,7 +173,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dip"
-                android:paddingEnd="20dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/text"
                 android:textSize="16sp"
                 android:layout_gravity="center_vertical"
@@ -175,6 +183,8 @@
                 android:id="@+id/editTextDC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="11dp"
                 android:inputType="text"
                 android:text=""
                 android:textSize="16sp"
@@ -186,7 +196,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dip">
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip">
 
             <!-- first element of the row-->
             <TextView
@@ -194,7 +205,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dip"
-                android:paddingEnd="20dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/text"
                 android:textSize="16sp"
                 android:layout_gravity="center_vertical"
@@ -224,7 +235,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dip">
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip">
 
             <!-- first element of the row-->
             <TextView
@@ -232,7 +244,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dip"
-                android:paddingEnd="20dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/text"
                 android:textSize="16sp"
                 android:layout_gravity="center_vertical"
@@ -242,6 +254,8 @@
                 android:id="@+id/editTextRange"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="11dp"
                 android:inputType="text"
                 android:text=""
                 android:textSize="16sp"
@@ -253,7 +267,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dip">
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip">
 
             <!-- first element of the row-->
             <TextView
@@ -261,7 +276,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dip"
-                android:paddingEnd="20dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/text"
                 android:textSize="16sp"
                 android:layout_gravity="center_vertical"
@@ -271,6 +286,8 @@
                 android:id="@+id/editTextDuration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="11dp"
                 android:inputType="text"
                 android:text=""
                 android:textSize="16sp"
@@ -282,7 +299,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="5dip">
+            android:paddingTop="5dip"
+            android:paddingBottom="5dip">
 
             <!-- first element of the row-->
             <TextView
@@ -290,7 +308,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dip"
-                android:paddingEnd="20dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/text"
                 android:textSize="16sp"
                 android:layout_gravity="center_vertical"
@@ -298,18 +316,20 @@
 
             <EditText
                 android:id="@+id/editTextDescription"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:text=""
-                android:textSize="16sp"
-                android:textColor="@color/text"
-                android:minLines="5"
-                android:lines="5"
-                android:gravity="top|start"
-                android:scrollbars="vertical"
+                android:layout_marginStart="11dp"
+                android:layout_marginEnd="11dp"
                 android:layout_gravity="center_vertical"
-                android:padding="5dp"/>
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:minLines="5"
+                android:padding="5dip"
+                android:scrollbars="vertical"
+                android:text=""
+                android:textColor="@color/text"
+                android:textSize="16sp" />
         </TableRow>
 
     </TableLayout>

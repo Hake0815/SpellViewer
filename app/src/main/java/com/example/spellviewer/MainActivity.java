@@ -5,6 +5,8 @@ package com.example.spellviewer;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,6 +19,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private ListAdapter listAdapter;
     private final String characterFileName = "character_list";
     private ActivityResultLauncher<Intent> selectImageLauncher;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
 //        Set toolbar title to app name
         TextView title = findViewById(R.id.toolbarTextView);
         title.setText(R.string.app_name);
+//        Set up navigation window
+        drawerLayout = findViewById(R.id.drawer_layout);
+        findViewById(R.id.toolbarImagaView).setOnClickListener(v -> {
+            drawerLayout.openDrawer(GravityCompat.START);
+        });
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView.setItemIconTintList(null);
+        navigationView.getMenu().getItem(0).setChecked(true);
 //        Read in character list from file if it exists or create new list
         if (MainActivity.fileExists(getApplicationContext(),characterFileName)) {
             try {
@@ -120,6 +133,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Method called from Navigation view item
+     * @param item Clicked menu item
+     */
+    public void openSpellList(MenuItem item) {
+        Intent intent = new Intent(MainActivity.this, SelectSpellListActivity.class);
+        intent.putExtra("Mode","DisplayOnly");
+        MainActivity.this.startActivity(intent);
+    }
+
+    /**
      * Write the characters in the local characters List variable to file
      */
     private void writeCharactersToFile() {
@@ -156,6 +179,15 @@ public class MainActivity extends AppCompatActivity {
             writeCharactersToFile();
         }
         return true;
+    }
+    @Override
+    public void onBackPressed() {
+//        On back press app should close navigation menu instead of activity
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     /**
