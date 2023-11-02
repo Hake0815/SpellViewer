@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+/KeyStorePath/private_key.pepk
+/KeyStorePath/SpellViewerKey.jks
+/app/release/output-metadata.json

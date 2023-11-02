@@ -4,6 +4,7 @@ package com.example.spellviewer;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -16,6 +17,10 @@ import android.widget.TextView;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -35,6 +40,7 @@ public class CharacterActivity extends AppCompatActivity {
     private Character character;
     private ActivityResultLauncher<Intent> selectSpellListLauncher;
     private ActivityResultLauncher<Intent> spellCreatorLauncher;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +76,9 @@ public class CharacterActivity extends AppCompatActivity {
         } catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+//        Set up navigation window
+        setUpNavView();
 //        Read image and display it in ImageView
         SerialBitmap avatar = characters.get(characters.indexOf(new CharacterImage(characterName))).getImage();
         ImageView imageView = findViewById(R.id.imageViewAvatar);
@@ -141,6 +150,43 @@ public class CharacterActivity extends AppCompatActivity {
         Intent intent = new Intent(this, SelectSpellListActivity.class);
         intent.putExtra("Mode", "SelectMode");
         selectSpellListLauncher.launch(intent);
+    }
+    /**
+     * Setup method for the Navigation view in the CharacterActivity
+     */
+    private void setUpNavView() {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        findViewById(R.id.toolbarImagaView).setOnClickListener(v -> {
+            drawerLayout.openDrawer(GravityCompat.START);
+        });
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView.setItemIconTintList(null);
+    }
+    /**
+     * Method called from Navigation view item
+     * @param item Clicked menu item
+     */
+    public void openSpellList(MenuItem item) {
+        Intent intent = new Intent(CharacterActivity.this, SelectSpellListActivity.class);
+        intent.putExtra("Mode","DisplayOnly");
+        CharacterActivity.this.startActivity(intent);
+    }
+    /**
+     * Open Link to rule pdf
+     * @param item Item that triggered method call
+     */
+    public void openRules(MenuItem item) {
+        Uri uri = Uri.parse("https://github.com/Hake0815/Heldenanleitung/blob/master/Heldenanleitung2.pdf"); // missing 'http://' will cause crashed
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+
+    /**
+     * Finish the Activity and go back to main from NavigationView
+     * @param item Item that triggered method call
+     */
+    public void goToMain(MenuItem item) {
+        finish();
     }
 
     @Override

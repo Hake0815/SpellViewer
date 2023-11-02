@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -50,14 +51,7 @@ public class MainActivity extends AppCompatActivity {
 //        Set toolbar title to app name
         TextView title = findViewById(R.id.toolbarTextView);
         title.setText(R.string.app_name);
-//        Set up navigation window
-        drawerLayout = findViewById(R.id.drawer_layout);
-        findViewById(R.id.toolbarImagaView).setOnClickListener(v -> {
-            drawerLayout.openDrawer(GravityCompat.START);
-        });
-        NavigationView navigationView = findViewById(R.id.navigationView);
-        navigationView.setItemIconTintList(null);
-        navigationView.getMenu().getItem(0).setChecked(true);
+
 //        Read in character list from file if it exists or create new list
         if (MainActivity.fileExists(getApplicationContext(),characterFileName)) {
             try {
@@ -72,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             characters = new ArrayList<>();
         }
+
+//        Set up navigation window
+        setUpNavView();
 //        Feed ListView with character list
         ListView characterListView = findViewById(R.id.listView);
         listAdapter = new ListAdapter(this, characters);
@@ -112,6 +109,39 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Setup method for the Vavigation view in the MainActivity
+     */
+    private void setUpNavView() {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        findViewById(R.id.toolbarImagaView).setOnClickListener(v -> {
+            drawerLayout.openDrawer(GravityCompat.START);
+        });
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView.setItemIconTintList(null);
+        navigationView.getMenu().getItem(0).setChecked(true);
+    }
+    /**
+     * Method called from Navigation view item
+     * @param item Clicked menu item
+     */
+    public void openSpellList(MenuItem item) {
+        Intent intent = new Intent(MainActivity.this, SelectSpellListActivity.class);
+        intent.putExtra("Mode","DisplayOnly");
+        MainActivity.this.startActivity(intent);
+    }
+    /**
+     * Open Link to rule pdf
+     * @param item Item that triggered method call
+     */
+    public void openRules(MenuItem item) {
+        Uri uri = Uri.parse("https://github.com/Hake0815/Heldenanleitung/blob/master/Heldenanleitung2.pdf"); // missing 'http://' will cause crashed
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(intent);
+    }
+    public void goToMain(MenuItem item) {
+    }
+
+    /**
      * Static Method to check if a file exists in the files directory of the app
      * @param context Application context
      * @param filename Name of the file to be checked
@@ -132,15 +162,6 @@ public class MainActivity extends AppCompatActivity {
         selectImageLauncher.launch(intent);
     }
 
-    /**
-     * Method called from Navigation view item
-     * @param item Clicked menu item
-     */
-    public void openSpellList(MenuItem item) {
-        Intent intent = new Intent(MainActivity.this, SelectSpellListActivity.class);
-        intent.putExtra("Mode","DisplayOnly");
-        MainActivity.this.startActivity(intent);
-    }
 
     /**
      * Write the characters in the local characters List variable to file

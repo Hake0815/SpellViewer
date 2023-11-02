@@ -4,7 +4,8 @@
     <item
         android:id="@+id/home"
         android:icon="@mipmap/ic_launcher_round"
-        android:title="@string/home" />
+        android:title="@string/home"
+        android:onClick="goToMain"/>
 
     <item
         android:id="@+id/spellList"
@@ -12,5 +13,10 @@
         android:title="@string/spellList"
         android:onClick="openSpellList"/>
 
+    <item
+        android:id="@+id/heldenanleitung"
+        android:icon="@drawable/baseline_arrow_circle_down_24"
+        android:title="@string/openRules"
+        android:onClick="openRules"/>
 
 </menu>

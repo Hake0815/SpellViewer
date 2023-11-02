@@ -74,6 +74,7 @@ public class SelectSpellListActivity extends AppCompatActivity {
         toolbarTitle.setText(getString(R.string.allSpellsList));
         ImageView toolbarImage = findViewById(R.id.toolbarImagaView);
         toolbarImage.setImageDrawable(getResources().getDrawable(R.drawable.baseline_arrow_back_24,null));
+        toolbarImage.getLayoutParams().width=100;
 
         if (mode.equals("DisplayOnly")) {
             toolbarImage.setOnClickListener(v -> finish());
