@@ -3,13 +3,13 @@
 
     <item
         android:id="@+id/home"
-        android:icon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/baseline_groups_24"
         android:title="@string/home"
         android:onClick="goToMain"/>
 
     <item
         android:id="@+id/spellList"
-        android:icon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/baseline_auto_fix_high_24"
         android:title="@string/spellList"
         android:onClick="openSpellList"/>
 

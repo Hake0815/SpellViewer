@@ -142,6 +142,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
 //        Get the values that should be displayed in the GroupView
+        int spellRank = ((Spell) getGroup(listPosition)).getRank();
         String spellName = ((Spell) getGroup(listPosition)).getName();
         SpellCat spellCat = ((Spell) getGroup(listPosition)).getSpellCat();
 //        Convert the listPosition to the position in the unfiltered data, they are identical
@@ -160,10 +161,12 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 convertView = layoutInflater.inflate(R.layout.parent, null);
             }
 //            The the child views of the group view are stored in the groupViewHolder
-            groupViewHolder.mGroupTextLeft = (TextView) convertView
+            groupViewHolder.mGroupTextLeft = convertView
                     .findViewById(R.id.textViewLeft);
-            groupViewHolder.mGroupTextRight = (TextView) convertView
+            groupViewHolder.mGroupTextRight = convertView
                     .findViewById(R.id.textViewRight);
+            groupViewHolder.mImageViewRank = convertView
+                    .findViewById(R.id.imageViewRank);
             if (withCheckMarks){
                 convertView.setTag(R.layout.parent_withcheckmarks,groupViewHolder);
             } else {
@@ -178,6 +181,13 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             }
         }
 //        Text of group view is set
+        if (spellRank == 1) {
+            groupViewHolder.mImageViewRank.setImageDrawable(MainActivity.resources.getDrawable(R.drawable.romenone,null));
+        } else if (spellRank == 2) {
+            groupViewHolder.mImageViewRank.setImageDrawable(MainActivity.resources.getDrawable(R.drawable.romentwo,null));
+        } else {
+            groupViewHolder.mImageViewRank.setImageDrawable(MainActivity.resources.getDrawable(R.drawable.romenthree,null));
+        }
         groupViewHolder.mGroupTextLeft.setTypeface(null, Typeface.BOLD);
         groupViewHolder.mGroupTextLeft.setText(spellName);
         groupViewHolder.mGroupTextRight.setTypeface(null, Typeface.BOLD);
@@ -234,6 +244,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView mGroupTextLeft;
         TextView mGroupTextRight;
         ImageView mImageView;
+        ImageView mImageViewRank;
     }
 
     /**
