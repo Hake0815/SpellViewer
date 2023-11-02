@@ -133,19 +133,21 @@ public class ImageSelectionActivity extends AppCompatActivity {
         }
 //        Check if Character exists already
         List<CharacterImage> characters;
-        try {
-            FileInputStream fis = getApplicationContext().openFileInput(characterFileName);
-            ObjectInputStream is = new ObjectInputStream(fis);
-            characters = (List<CharacterImage>) is.readObject();
-            is.close();
-            fis.close();
-        } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        if (characters.contains(characterImage)) {
-            Toast.makeText(this, getResources().getString(R.string.characterExists),
-                    Toast.LENGTH_LONG).show();
-            return;
+        if (MainActivity.fileExists(getApplicationContext(), characterFileName)) {
+            try {
+                FileInputStream fis = getApplicationContext().openFileInput(characterFileName);
+                ObjectInputStream is = new ObjectInputStream(fis);
+                characters = (List<CharacterImage>) is.readObject();
+                is.close();
+                fis.close();
+            } catch (IOException | ClassNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            if (characters.contains(characterImage)) {
+                Toast.makeText(this, getResources().getString(R.string.characterExists),
+                        Toast.LENGTH_LONG).show();
+                return;
+            }
         }
 //        Write the result as character to file
             try {
