@@ -8,6 +8,8 @@
     <string name="cancel">Abbrechen</string>
     <string name="confirm">Bestätigen</string>
     <string name="gallery">Gallerie</string>
+    <string name="resetSpell">Zauber zurücksetzen</string>
+    <string name="resetSpellDialogText">Damit werden alle selbsterstellten Zauber gelöscht und die Standardzauber wiederhergestellt. Fortfahren?</string>
     <string name="characterExists">Charakter existiert bereits!</string>
     <string name="characterName">Charaktername</string>
     <string name="chooseCharacter">Wähle einen Charakter</string>

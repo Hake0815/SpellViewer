@@ -1,8 +1,10 @@
 package com.example.spellviewer;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -13,6 +15,7 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -42,7 +45,7 @@ public class SelectSpellListActivity extends AppCompatActivity {
     private ExpandableListAdapter expandableListAdapter;
     private ActivityResultLauncher<Intent> spellCreatorLauncher;
     private List<Spell> spells;
-    private final String spellListFile = "spell_list";
+    public static final String spellListFile = "spell_list";
     private TextInputLayout textInputLayoutLeft;
     private TextInputLayout textInputLayoutRight;
     private String mode;
@@ -88,15 +91,7 @@ public class SelectSpellListActivity extends AppCompatActivity {
 
 //        Read Spells from file, if it does not exist create the default spells
         if (MainActivity.fileExists(getApplicationContext(), spellListFile)) {
-            try {
-                FileInputStream fis = getApplicationContext().openFileInput(spellListFile);
-                ObjectInputStream is = new ObjectInputStream(fis);
-                spells = (List<Spell>) is.readObject();
-                is.close();
-                fis.close();
-            } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            readInSpellListFile();
         } else {
             spells = ExpandableListData.getData();
             writeSpellsToFile();
@@ -106,8 +101,8 @@ public class SelectSpellListActivity extends AppCompatActivity {
         if (mode.equals("DisplayOnly")) {
             expandableListAdapter = new ExpandableListAdapter(this, spells);
             Button confirmButton = findViewById(R.id.confirm_button);
-            confirmButton.setEnabled(false);
-            confirmButton.setVisibility(View.GONE);
+            confirmButton.setText(getString(R.string.resetSpell));
+            confirmButton.setCompoundDrawablesWithIntrinsicBounds(null,getDrawable(R.drawable.baseline_restart_alt_24),null,null);
         } else {
             expandableListAdapter = new ExpandableListAdapter(this, spells,true);
         }
@@ -187,17 +182,32 @@ public class SelectSpellListActivity extends AppCompatActivity {
 
 
     /**
-     * Button method to finish the activity and pass the selected spells in intend as result
+     * Button method to finish the activity and pass the selected spells in intend as result if in
+     * Select mode, or reset spell list if in display mode
      * @param view View that calls this method
      */
     public void confirmSpells(View view) {
-        List<Spell> spells = expandableListAdapter.getCheckedSpells();
-        Bundle extra = new Bundle();
-        extra.putSerializable("Spells", (Serializable) spells);
-        Intent intent = new Intent();
-        intent.putExtra("Spells", extra);
-        setResult(Activity.RESULT_OK,intent);
-        finish();
+        if (mode.equals("DisplayOnly")) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(this);
+            alert.setTitle(getString(R.string.resetSpell));
+            alert.setMessage(getString(R.string.resetSpellDialogText));
+            alert.setPositiveButton(getString(R.string.ok), (dialog, id) -> {
+                spells.clear();
+                spells.addAll(ExpandableListData.getData());
+                writeSpellsToFile();
+                filterData();
+            });
+            alert.setNegativeButton(getString(R.string.cancel), ((dialog, which) -> {}));
+            alert.show();
+        } else {
+            List<Spell> spells = expandableListAdapter.getCheckedSpells();
+            Bundle extra = new Bundle();
+            extra.putSerializable("Spells", (Serializable) spells);
+            Intent intent = new Intent();
+            intent.putExtra("Spells", extra);
+            setResult(Activity.RESULT_OK,intent);
+            finish();
+        }
     }
 
     /**
@@ -273,5 +283,20 @@ public class SelectSpellListActivity extends AppCompatActivity {
 //                        Get selected rank
         String rankSelection = textInputLayoutLeft.getEditText().getText().toString();
         expandableListAdapter.filterData(rankSelectionToInt(rankSelection), spellCatSelectionToSpellCat(catSelection));
+    }
+
+    /**
+     * Method to read in the file with the saved spell List.
+     */
+    private void readInSpellListFile() {
+        try {
+            FileInputStream fis = getApplicationContext().openFileInput(spellListFile);
+            ObjectInputStream is = new ObjectInputStream(fis);
+            spells = (List<Spell>) is.readObject();
+            is.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
