@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Serializable class to store the name of a character together with a List of spells
  */
-public class Character implements Serializable {
+public class Wizard implements Serializable {
     private final String name;
     private List<Spell> spells;
 
@@ -15,7 +15,7 @@ public class Character implements Serializable {
      * Constructor sets name of character and initializes the spell list to an empty ArrayList
      * @param name Name of the new Character
      */
-    public Character(String name) {
+    public Wizard(String name) {
         this.name = name;
         this.spells = new ArrayList<>();
     }

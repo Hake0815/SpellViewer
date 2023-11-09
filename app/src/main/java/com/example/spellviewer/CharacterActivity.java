@@ -37,7 +37,7 @@ import java.util.List;
  */
 public class CharacterActivity extends AppCompatActivity {
     private ExpandableListAdapter expandableListAdapter;
-    private Character character;
+    private Wizard wizard;
     private ActivityResultLauncher<Intent> selectSpellListLauncher;
     private ActivityResultLauncher<Intent> spellCreatorLauncher;
     private DrawerLayout drawerLayout;
@@ -52,25 +52,32 @@ public class CharacterActivity extends AppCompatActivity {
 //        Look for existing character data
         if (MainActivity.fileExists(getApplicationContext(), characterName)) {
 //            Read character data from file
+            Object o;
             try {
                 FileInputStream fis = getApplicationContext().openFileInput(characterName);
                 ObjectInputStream is = new ObjectInputStream(fis);
-                character = (Character) is.readObject();
+                o = is.readObject();
                 is.close();
                 fis.close();
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
+            if (o instanceof Wizard) {
+                wizard = (Wizard) o;
+            } else {
+                deleteFile(characterName);
+                wizard = new Wizard(characterName);
+            }
         } else {
 //            If no character data exists, it is a new character
-            character = new Character(characterName);
+            wizard = new Wizard(characterName);
         }
 //        Read character list file to obtain the image
-        List<CharacterImage> characters;
+        List<WizardImage> characters;
         try {
-            FileInputStream fis = getApplicationContext().openFileInput("character_list");
+            FileInputStream fis = getApplicationContext().openFileInput(MainActivity.characterFileName);
             ObjectInputStream is = new ObjectInputStream(fis);
-            characters = (List<CharacterImage>) is.readObject();
+            characters = (List<WizardImage>) is.readObject();
             is.close();
             fis.close();
         } catch (IOException | ClassNotFoundException e) {
@@ -80,15 +87,15 @@ public class CharacterActivity extends AppCompatActivity {
 //        Set up navigation window
         setUpNavView();
 //        Read image and display it in ImageView
-        SerialBitmap avatar = characters.get(characters.indexOf(new CharacterImage(characterName))).getImage();
+        SerialBitmap avatar = characters.get(characters.indexOf(new WizardImage(characterName))).getImage();
         ImageView imageView = findViewById(R.id.imageViewAvatar);
         imageView.setImageBitmap(avatar.bitmap);
 //        The toolbar title is set to the character name
         TextView title = findViewById(R.id.toolbarTextView);
-        title.setText(character.getName());
+        title.setText(wizard.getName());
 //        ExpandableListView is fed with the spell list of the character
         ExpandableListView expandableListView = findViewById(R.id.expandableListView);
-        expandableListAdapter = new ExpandableListAdapter(this, character.getSpells());
+        expandableListAdapter = new ExpandableListAdapter(this, wizard.getSpells());
         expandableListView.setAdapter(expandableListAdapter);
 //        Long clicks on Items in the ELV open context Menu
         registerForContextMenu(expandableListView);
@@ -105,12 +112,12 @@ public class CharacterActivity extends AppCompatActivity {
                         spells = (ArrayList<Spell>) extra.getSerializable("Spells");
 //                        Add passed spells to the character but only if the character does not know them already
                         for (Spell spell : spells) {
-                            if (!character.getSpells().contains(spell)) {
-                                character.addSpell(spell);
+                            if (!wizard.getSpells().contains(spell)) {
+                                wizard.addSpell(spell);
                             }
                         }
 //                        Sort the list of character spells
-                        Collections.sort(character.getSpells());
+                        Collections.sort(wizard.getSpells());
                     }
 //                    Notify the ELVAdapter that the data has changed.
                     updateSpellListView();
@@ -125,9 +132,9 @@ public class CharacterActivity extends AppCompatActivity {
                         Bundle extra = result.getData().getBundleExtra("NewSpell");
                         assert extra != null;
                         modifiedSpell = (Spell) extra.getSerializable("NewSpell");
-                        character.removeSpell(character.getSpells().indexOf(modifiedSpell));
-                        character.addSpell(modifiedSpell);
-                        Collections.sort(character.getSpells());
+                        wizard.removeSpell(wizard.getSpells().indexOf(modifiedSpell));
+                        wizard.addSpell(modifiedSpell);
+                        Collections.sort(wizard.getSpells());
 //                        Notify the ELVAdapter that the data has changed.
                         updateSpellListView();
                     }
@@ -214,7 +221,7 @@ public class CharacterActivity extends AppCompatActivity {
 //            get the selected group position
             int id = ExpandableListView.getPackedPositionGroup(info.packedPosition);
 //            Spell to be modified
-            Spell modSpell = character.getSpells().get(id);
+            Spell modSpell = wizard.getSpells().get(id);
             Bundle extra = new Bundle();
             extra.putSerializable("ModSpell", (Serializable) modSpell);
             Intent intent = new Intent(this, SpellCreationActivity.class);
@@ -226,7 +233,7 @@ public class CharacterActivity extends AppCompatActivity {
 //            get the selected group position
             int id = ExpandableListView.getPackedPositionGroup(info.packedPosition);
 //            remove selected spell from characters spells
-            character.removeSpell(id);
+            wizard.removeSpell(id);
 //            Notify adapter that data has changed
             updateSpellListView();
         }
@@ -249,11 +256,11 @@ public class CharacterActivity extends AppCompatActivity {
      * Method to write the character data to a file with the character name as file name
      */
     private void writeCharacterToFile() {
-        String fileName = character.getName();
+        String fileName = wizard.getName();
         try {
             FileOutputStream fos = getApplicationContext().openFileOutput(fileName, Context.MODE_PRIVATE);
             ObjectOutputStream os = new ObjectOutputStream(fos);
-            os.writeObject(character);
+            os.writeObject(wizard);
             os.close();
             fos.close();
         } catch (IOException e) {

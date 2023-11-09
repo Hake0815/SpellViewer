@@ -14,7 +14,7 @@ import java.util.List;
  * BaseAdapter class for a ListView displaying characters
  */
 public class ListAdapter extends BaseAdapter {
-    private List<CharacterImage> characters;
+    private List<WizardImage> characters;
     private final Context context;
 
     public void updateData(){
@@ -26,7 +26,7 @@ public class ListAdapter extends BaseAdapter {
      * @param context ActivityContext of ListView
      * @param characters List of CharacterImage to be displayed in ListView
      */
-    public ListAdapter(Context context, List<CharacterImage> characters) {
+    public ListAdapter(Context context, List<WizardImage> characters) {
 
         this.characters = characters;
         this.context = context;

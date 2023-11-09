@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -42,7 +43,7 @@ public class ImageSelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        Get file name with character list
-        characterFileName = getIntent().getStringExtra("CharacterList");
+        characterFileName = MainActivity.characterFileName;
         setContentView(R.layout.activity_image_selection);
         TableLayout tableLayout = findViewById(R.id.simpleTableLayout);
         selectedImageView = null;
@@ -113,10 +114,15 @@ public class ImageSelectionActivity extends AppCompatActivity {
 //        Get the character name
         EditText editText = findViewById(R.id.editTextText);
         String name = String.valueOf(editText.getText());
-        CharacterImage characterImage;
+        if (name.equals("")) {
+            Toast.makeText(this, getResources().getString(R.string.noNameEntered),
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+        WizardImage wizardImage;
         if (imageFromGallery != null) {
 //            If an image was selected from gallery use it as image result
-            characterImage = new CharacterImage(name, imageFromGallery);
+            wizardImage = new WizardImage(name, imageFromGallery);
         } else {
 //            Get the slected image
             Bitmap image;
@@ -129,39 +135,32 @@ public class ImageSelectionActivity extends AppCompatActivity {
             DisplayMetrics displayMetrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             SerialBitmap serialImage = new SerialBitmap(getResizedBitmap(image, displayMetrics.widthPixels, displayMetrics.widthPixels));
-            characterImage = new CharacterImage(name, serialImage);
+            wizardImage = new WizardImage(name, serialImage);
         }
 //        Check if Character exists already
-        List<CharacterImage> characters;
+        List<WizardImage> characters;
         if (MainActivity.fileExists(getApplicationContext(), characterFileName)) {
             try {
                 FileInputStream fis = getApplicationContext().openFileInput(characterFileName);
                 ObjectInputStream is = new ObjectInputStream(fis);
-                characters = (List<CharacterImage>) is.readObject();
+                characters = (List<WizardImage>) is.readObject();
                 is.close();
                 fis.close();
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            if (characters.contains(characterImage)) {
+            if (characters.contains(wizardImage)) {
                 Toast.makeText(this, getResources().getString(R.string.characterExists),
                         Toast.LENGTH_LONG).show();
                 return;
             }
         }
-//        Write the result as character to file
-            try {
-                FileOutputStream fos = getApplicationContext().openFileOutput("tempFile", Context.MODE_PRIVATE);
-                ObjectOutputStream os = new ObjectOutputStream(fos);
-                os.writeObject(characterImage);
-                os.close();
-                fos.close();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-//        Pass the file name as result to previous activity.
+//        Pass image and name of new Wizard as result.
+        Bundle extra = new Bundle();
         Intent intent = new Intent();
-        intent.putExtra("result", "tempFile");
+        extra.putSerializable("WizardImage", wizardImage.getImage());
+        intent.putExtra("WizardImage", extra);
+        intent.putExtra("WizardName", wizardImage.getName());
         setResult(Activity.RESULT_OK, intent);
         finish();
     }

@@ -37,9 +37,9 @@ import java.util.List;
  */
 public class MainActivity extends AppCompatActivity {
     public static Resources resources;
-    private List<CharacterImage> characters;
+    private List<WizardImage> wizards;
     private ListAdapter listAdapter;
-    private final String characterFileName = "character_list";
+    public static final String characterFileName = "character_list";
     private ActivityResultLauncher<Intent> selectImageLauncher;
     private DrawerLayout drawerLayout;
 
@@ -54,31 +54,38 @@ public class MainActivity extends AppCompatActivity {
 
 //        Read in character list from file if it exists or create new list
         if (MainActivity.fileExists(getApplicationContext(),characterFileName)) {
+            List list;
             try {
                 FileInputStream fis = getApplicationContext().openFileInput(characterFileName);
                 ObjectInputStream is = new ObjectInputStream(fis);
-                characters = (List<CharacterImage>) is.readObject();
+                list = (List) is.readObject();
                 is.close();
                 fis.close();
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
+            if (list.get(0) instanceof WizardImage) {
+                wizards = (List<WizardImage>) list;
+            } else {
+                deleteFile(characterFileName);
+                wizards = new ArrayList<>();
+            }
         } else {
-            characters = new ArrayList<>();
+            wizards = new ArrayList<>();
         }
 
 //        Set up navigation window
         setUpNavView();
 //        Feed ListView with character list
         ListView characterListView = findViewById(R.id.listView);
-        listAdapter = new ListAdapter(this, characters);
+        listAdapter = new ListAdapter(this, wizards);
         characterListView.setAdapter(listAdapter);
 
         registerForContextMenu(characterListView);
 //        If Listview Item is clicked the Character Activity is launched for the clicked character
         characterListView.setOnItemClickListener((parent, view, position, id) -> {
             Intent intent = new Intent(MainActivity.this, CharacterActivity.class);
-            intent.putExtra("characterName",characters.get(position).getName());
+            intent.putExtra("characterName", wizards.get(position).getName());
             MainActivity.this.startActivity(intent);
         });
 
@@ -87,19 +94,13 @@ public class MainActivity extends AppCompatActivity {
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-//                        read character info from file
-                        String tempFileName = result.getData().getStringExtra("result");
-                        try {
-                            FileInputStream fis = getApplicationContext().openFileInput(tempFileName);
-                            ObjectInputStream is = new ObjectInputStream(fis);
-                            characters.add((CharacterImage) is.readObject());
-                            is.close();
-                            fis.close();
-                        } catch (IOException | ClassNotFoundException e) {
-                            throw new RuntimeException(e);
-                        }
-//                        delete the temporary file holding character info
-                        deleteFile(tempFileName);
+//                        Get the Image and name of new Wizard from the result data
+                        assert result.getData() != null;
+                        Bundle extra = result.getData().getBundleExtra("WizardImage");
+                        assert extra != null;
+                        SerialBitmap newWizardImage = (SerialBitmap) extra.getSerializable("WizardImage");
+                        String newWizardName = result.getData().getStringExtra("WizardName");
+                        wizards.add(new WizardImage(newWizardName, newWizardImage));
                         updateCharacterListView();
 //                        Save character list including new character to file
                         writeCharactersToFile();
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Setup method for the Vavigation view in the MainActivity
+     * Setup method for the Navigation view in the MainActivity
      */
     private void setUpNavView() {
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -167,7 +168,6 @@ public class MainActivity extends AppCompatActivity {
      */
     public void newCharacter(View view) {
         Intent intent = new Intent(this, ImageSelectionActivity.class);
-        intent.putExtra("CharacterList", characterFileName);
         selectImageLauncher.launch(intent);
     }
 
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         try {
             FileOutputStream fos = getApplicationContext().openFileOutput(characterFileName, Context.MODE_PRIVATE);
             ObjectOutputStream os = new ObjectOutputStream(fos);
-            os.writeObject(characters);
+            os.writeObject(wizards);
             os.close();
             fos.close();
         } catch (IOException e) {
@@ -200,10 +200,10 @@ public class MainActivity extends AppCompatActivity {
 //            get the selected position
             int id = info.position;
 //            Get character name to remove its data if it exists
-            String name = characters.get(id).getName();
+            String name = wizards.get(id).getName();
             deleteFile(name);
 //            remove selected character
-            characters.remove(id);
+            wizards.remove(id);
 //            Notify adapter that data has changed
             updateCharacterListView();
             writeCharactersToFile();
