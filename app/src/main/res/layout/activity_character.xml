@@ -48,6 +48,8 @@
             android:layout_height="match_parent"
             android:layout_marginStart="0dp"
             android:divider="#A4C739"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
             android:dividerHeight="1.0dp"
             android:childDivider="#A4C739"
             android:textColor="#FF000000" />

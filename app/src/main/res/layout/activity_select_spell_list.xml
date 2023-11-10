@@ -68,6 +68,8 @@
         android:dividerHeight="1.0dp"
         android:childDivider="#A4C739"
         android:layout_weight="1"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:textColor="#FF000000"/>
 
     <LinearLayout
