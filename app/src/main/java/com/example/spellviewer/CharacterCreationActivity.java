@@ -1,7 +1,6 @@
 package com.example.spellviewer;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,52 +13,68 @@ import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.tabs.TabLayout;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.List;
 
 /**
  * Activity Class to Select the image for a new character
  */
-public class ImageSelectionActivity extends AppCompatActivity {
-    private CheckImageView selectedImageView;
+public class CharacterCreationActivity extends AppCompatActivity {
     private SerialBitmap imageFromGallery;
     private ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     private String characterFileName;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        Get file name with character list
         characterFileName = MainActivity.characterFileName;
-        setContentView(R.layout.activity_image_selection);
-        TableLayout tableLayout = findViewById(R.id.simpleTableLayout);
-        selectedImageView = null;
-        View.OnClickListener onClickListener = v -> imageViewSelected((CheckImageView) v);
-//        Set the OnClickListener for all ImageViews
-        for (int i = 0, tableChildCount = tableLayout.getChildCount(); i < tableChildCount; i++) {
-            View rowView = tableLayout.getChildAt(i);
-            if (rowView instanceof TableRow) {
-                for (int j = 0, columnCount = ((TableRow) rowView).getChildCount(); j < columnCount; j++) {
-                    View imageView = ((TableRow) rowView).getChildAt(j);
-                    if (imageView instanceof CheckImageView) {
-                        imageView.setOnClickListener(onClickListener);
-                    }
-                }
+        setContentView(R.layout.activity_character_creation);
+        tabLayout = findViewById(R.id.tabLayout);
+        viewPager2 = findViewById(R.id.viewPager);
+        ImageViewPagerAdapter imageViewPagerAdapter = new ImageViewPagerAdapter(this);
+        viewPager2.setAdapter(imageViewPagerAdapter);
+        viewPager2.setUserInputEnabled(false);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                ImageFragment imageFragment = (ImageFragment) getSupportFragmentManager().findFragmentByTag("f" + viewPager2.getCurrentItem());
+                imageFragment.unselectImageView();
+                viewPager2.setCurrentItem(tab.getPosition());
             }
-        }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                super.onPageSelected(position);
+                tabLayout.getTabAt(position).select();
+            }
+        });
 //        Launcher to open the Gallery
         pickMedia =
                 registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
@@ -85,27 +100,6 @@ public class ImageSelectionActivity extends AppCompatActivity {
     }
 
     /**
-     * Method to toggle the selected status of an CheckedImageView, while unselect any previously
-     * selected image view
-     * @param imageView CheckImageView to be toggled
-     */
-    private void imageViewSelected(CheckImageView imageView){
-        if (selectedImageView == imageView) {
-//            The selected ImageView is clicked again, and hence it is set to unselected.
-            imageView.toggle();
-            selectedImageView = null;
-            return;
-        }
-        if (selectedImageView != null) {
-//            If a different image was selected previously it is unselected here
-            selectedImageView.toggle();
-        }
-//        Select the image and save selection.
-        imageView.toggle();
-        selectedImageView = imageView;
-    }
-
-    /**
      * Method called after Button press. Method that finishes activity and returns a result.
      * The selected Image and name is saved and passed to previous activity.
      * @param view View that called the method.
@@ -124,18 +118,18 @@ public class ImageSelectionActivity extends AppCompatActivity {
 //            If an image was selected from gallery use it as image result
             wizardImage = new WizardImage(name, imageFromGallery);
         } else {
-//            Get the slected image
-            Bitmap image;
-            if (selectedImageView == null) {
-                image = BitmapFactory.decodeResource(MainActivity.resources, R.drawable.mysterion_nobg);
-            } else {
-                image = drawableToBitmap(selectedImageView.getDrawable());
+//            Get the selected image
+            ImageFragment imageFragment = (ImageFragment) getSupportFragmentManager().findFragmentByTag("f" + viewPager2.getCurrentItem());
+            SerialBitmap imageSelection = imageFragment.getSelectedImage();
+            if (imageSelection == null) {
+                imageSelection = new SerialBitmap(BitmapFactory.decodeResource(MainActivity.resources, R.drawable.mysterion_nobg_small));
             }
-//            Resize the image to device size, note all images are squares
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-            SerialBitmap serialImage = new SerialBitmap(getResizedBitmap(image, displayMetrics.widthPixels, displayMetrics.widthPixels));
-            wizardImage = new WizardImage(name, serialImage);
+////            Resize the image to device size, note all images are squares
+//            DisplayMetrics displayMetrics = new DisplayMetrics();
+//            getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+//            SerialBitmap serialImage = new SerialBitmap(getResizedBitmap(image, displayMetrics.widthPixels, displayMetrics.widthPixels));
+//            wizardImage = new WizardImage(name, serialImage);
+            wizardImage = new WizardImage(name, imageSelection);
         }
 //        Check if Character exists already
         List<WizardImage> characters;

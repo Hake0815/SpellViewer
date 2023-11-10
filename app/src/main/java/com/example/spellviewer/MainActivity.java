@@ -64,8 +64,11 @@ public class MainActivity extends AppCompatActivity {
             } catch (IOException | ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
-            if (list.get(0) instanceof WizardImage) {
-                wizards = (List<WizardImage>) list;
+            if (list.isEmpty()) {
+                deleteFile(characterFileName);
+                wizards = new ArrayList<>();
+            } else if (list.get(0) instanceof WizardImage) {
+                wizards = (ArrayList<WizardImage>) list;
             } else {
                 deleteFile(characterFileName);
                 wizards = new ArrayList<>();
@@ -167,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
      * @param view View that calls the method
      */
     public void newCharacter(View view) {
-        Intent intent = new Intent(this, ImageSelectionActivity.class);
+//        Intent intent = new Intent(this, ImageSelectionActivity.class);
+        Intent intent = new Intent(this, CharacterCreationActivity.class);
         selectImageLauncher.launch(intent);
     }
 
@@ -190,13 +194,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, v.getId(), 0, Resources.getSystem().getString(R.string.delete));
+        menu.add(0, v.getId(), 0, getResources().getString(R.string.delete));
     }
 
 
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        if (item.getTitle() == Resources.getSystem().getString(R.string.delete)) {
+        if (item.getTitle() == getResources().getString(R.string.delete)) {
 //            get the selected position
             int id = info.position;
 //            Get character name to remove its data if it exists
