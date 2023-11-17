@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -138,10 +139,15 @@ public class SelectSpellListActivity extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         // The created spell is obtained here
                         assert result.getData() != null;
+                        String spellMode = result.getData().getStringExtra("Mode");
                         Bundle extra = result.getData().getBundleExtra("NewSpell");
                         assert extra != null;
                         newSpell = (Spell) extra.getSerializable("NewSpell");
-
+//                        If a spell was modified, remove the old version
+                        if (spellMode.equals("ModifySpell")) {
+                            Spell oldSpell = (Spell) extra.getSerializable("OldSpell");
+                            spells.remove(oldSpell);
+                        }
                         spells.add(newSpell);
                         Collections.sort(spells);
 //                        Update ELV with selected filters
@@ -158,7 +164,8 @@ public class SelectSpellListActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add(0, v.getId(), 0, getResources().getString(R.string.delete));
+        menu.add(Menu.NONE, v.getId(), 0, getResources().getString(R.string.modify));
+        menu.add(Menu.NONE, v.getId(), 1, getResources().getString(R.string.delete));
 
     }
     @Override
@@ -166,6 +173,18 @@ public class SelectSpellListActivity extends AppCompatActivity {
         ExpandableListView.ExpandableListContextMenuInfo info = (ExpandableListView.ExpandableListContextMenuInfo)item.getMenuInfo();
 //        If the delete option is selected the respective item is removed from the spell list
 //        and also from the ELV
+        if (item.getTitle() == getResources().getString(R.string.modify)) {
+//            get the selected group position
+            int id = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+//            Spell to be modified
+            Spell modSpell = spells.get(id);
+            Bundle extra = new Bundle();
+            extra.putSerializable("ModSpell", (Serializable) modSpell);
+            Intent intent = new Intent(this, SpellCreationActivity.class);
+            intent.putExtra("ModSpell", extra);
+            intent.putExtra("Mode", "ModifySpell");
+            spellCreatorLauncher.launch(intent);
+        }
         if (item.getTitle() == getResources().getString(R.string.delete)) {
 //            get the selected group position
             int id = ExpandableListView.getPackedPositionGroup(info.packedPosition);
@@ -296,7 +315,8 @@ public class SelectSpellListActivity extends AppCompatActivity {
             is.close();
             fis.close();
         } catch (IOException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            spells = ExpandableListData.getData();
+            writeSpellsToFile();
         }
     }
 }

@@ -52,7 +52,7 @@ public class CharacterActivity extends AppCompatActivity {
 //        Look for existing character data
         if (MainActivity.fileExists(getApplicationContext(), characterName)) {
 //            Read character data from file
-            Object o;
+            Object o = null;
             try {
                 FileInputStream fis = getApplicationContext().openFileInput(characterName);
                 ObjectInputStream is = new ObjectInputStream(fis);
@@ -60,7 +60,9 @@ public class CharacterActivity extends AppCompatActivity {
                 is.close();
                 fis.close();
             } catch (IOException | ClassNotFoundException e) {
-                throw new RuntimeException(e);
+//                throw new RuntimeException(e);
+                wizard = new Wizard(characterName);
+                deleteFile(characterName);
             }
             if (o instanceof Wizard) {
                 wizard = (Wizard) o;
@@ -125,14 +127,14 @@ public class CharacterActivity extends AppCompatActivity {
         spellCreatorLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-                    Spell modifiedSpell;
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         // The created spell is obtained here
                         assert result.getData() != null;
                         Bundle extra = result.getData().getBundleExtra("NewSpell");
                         assert extra != null;
-                        modifiedSpell = (Spell) extra.getSerializable("NewSpell");
-                        wizard.removeSpell(wizard.getSpells().indexOf(modifiedSpell));
+                        Spell modifiedSpell = (Spell) extra.getSerializable("NewSpell");
+                        Spell oldSpell = (Spell) extra.getSerializable("OldSpell");
+                        wizard.removeSpell(wizard.getSpells().indexOf(oldSpell));
                         wizard.addSpell(modifiedSpell);
                         Collections.sort(wizard.getSpells());
 //                        Notify the ELVAdapter that the data has changed.

@@ -26,6 +26,8 @@ import java.util.List;
  */
 public class SpellCreationActivity extends AppCompatActivity {
     private String mode;
+    private boolean custom;
+    private Spell modSpell;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +38,11 @@ public class SpellCreationActivity extends AppCompatActivity {
 //            A new Spell should be create
 //            Set the toolbar title
             toolbarTitle.setText(getString(R.string.newSpell));
+            custom = true;
         } else if (mode.equals("ModifySpell")) {
 //            Get the spell from intent
             Bundle extra = getIntent().getBundleExtra("ModSpell");
-            Spell modSpell = (Spell) extra.getSerializable("ModSpell");
+            modSpell = (Spell) extra.getSerializable("ModSpell");
             toolbarTitle.setText(modSpell.getName() + getResources().getString(R.string.modSpell));
             TextInputLayout textInputLayoutRank = findViewById(R.id.textInputLayoutRank);
             TextInputLayout textInputLayoutSpellCat = findViewById(R.id.textInputLayoutSpellCat);
@@ -59,6 +62,7 @@ public class SpellCreationActivity extends AppCompatActivity {
             textInputLayoutRank.getEditText().setText(String.valueOf(modSpell.getRank()));
             textInputLayoutAction.getEditText().setText(modSpell.getActionCost().toString());
             textInputLayoutSpellCat.getEditText().setText(modSpell.getSpellCat().toString());
+            custom = modSpell.isCustom();
         }
 
 
@@ -109,7 +113,7 @@ public class SpellCreationActivity extends AppCompatActivity {
         Action spellAction = actionSelectionToAction(textInputLayoutAction.getEditText().getText().toString());
 
         Spell newSpell = new Spell(spellName, spellDescription, spellRank, spellMana, spellDC,
-                spellAction, spellRange, spellDuration, spellCat);
+                spellAction, spellRange, spellDuration, spellCat, custom);
         if (mode.equals("NewSpell")) {
 //            Check if Spell with the same name already exists
             if (MainActivity.fileExists(getApplicationContext(), "spell_list")) {
@@ -132,8 +136,13 @@ public class SpellCreationActivity extends AppCompatActivity {
         }
         Bundle extra = new Bundle();
         extra.putSerializable("NewSpell", (Serializable) newSpell);
+        if (mode.equals("ModifySpell")){
+//            If a spell is modified pass the old spell for removal
+            extra.putSerializable("OldSpell", (Serializable) modSpell);
+        }
         Intent intent = new Intent();
         intent.putExtra("NewSpell", extra);
+        intent.putExtra("Mode", mode);
         setResult(Activity.RESULT_OK,intent);
         finish();
 
