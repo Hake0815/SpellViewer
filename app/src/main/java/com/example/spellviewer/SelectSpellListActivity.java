@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -15,7 +14,6 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -192,8 +190,9 @@ public class SelectSpellListActivity extends AppCompatActivity {
             alert.setTitle(getString(R.string.resetSpell));
             alert.setMessage(getString(R.string.resetSpellDialogText));
             alert.setPositiveButton(getString(R.string.ok), (dialog, id) -> {
-                spells.clear();
+                spells.removeIf(spell -> !spell.isCustom());
                 spells.addAll(ExpandableListData.getData());
+                Collections.sort(spells);
                 writeSpellsToFile();
                 filterData();
             });
@@ -273,6 +272,7 @@ public class SelectSpellListActivity extends AppCompatActivity {
             throw new RuntimeException(e);
         }
     }
+
 
     /**
      * Method to filter the data according to the selected filters in the autoCompleteTextViews

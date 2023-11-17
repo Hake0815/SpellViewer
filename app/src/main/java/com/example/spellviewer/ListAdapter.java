@@ -24,7 +24,7 @@ public class ListAdapter extends BaseAdapter {
     /**
      * Constructor for ListAdapter
      * @param context ActivityContext of ListView
-     * @param characters List of CharacterImage to be displayed in ListView
+     * @param characters List of WizardImage to be displayed in ListView
      */
     public ListAdapter(Context context, List<WizardImage> characters) {
 

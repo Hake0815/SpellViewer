@@ -9,7 +9,7 @@
     <string name="confirm">Bestätigen</string>
     <string name="gallery">Gallerie</string>
     <string name="resetSpell">Zauber zurücksetzen</string>
-    <string name="resetSpellDialogText">Damit werden alle selbsterstellten Zauber gelöscht und die Standardzauber wiederhergestellt. Fortfahren?</string>
+    <string name="resetSpellDialogText">Damit die Standardzauber wiederhergestellt. Selbst erstellte Zauber bleiben erhalten. Fortfahren?</string>
     <string name="characterExists">Charakter existiert bereits!</string>
     <string name="noNameEntered">Charaktername darf nicht leer sein!</string>
     <string name="characterName">Charaktername</string>
@@ -136,7 +136,7 @@ Probe wird sie um 2 leichter.</string>
     <!--    Boil blood spell -->
     <string name="boilBlood_name">Blut kochen</string>
     <string name="boilBlood_description">ZW lässt das Blut eines Ziels kochen. Richtet immer wenn das Ziel an der Reihe ist
-Wil(+1xSteigerung) Magieschaden an.</string>
+Wil(+1W4 pro Steigerung) Magieschaden an.</string>
     <string name="boilBlood_range">20 m</string>
     <string name="boilBlood_duration">Beliebig</string>
     <string name="boilBlood_dc">Willenskraft</string>
@@ -253,7 +253,7 @@ Runden.</string>
     <string name="vineAttack_description">ZW beschwört Ranke aus dem Boden in max 30 m Entfernung. Ranke greift alle Fein-
 de in 2 m Radius, direkt nach dem Zug des Zaubernden, an (zählt als Nahkampfan-
 griff). Als Angriffswurf wird erneut eine Zaubernprobe geworfen. Die Ranke verursacht
-2W4(+1xSteigerung) Schaden. Die Ranke hat 10 Lp und keine Abwehr.</string>
+2W4(+1W4 pro Steigerung) Schaden. Die Ranke hat 10 Lp und keine Abwehr.</string>
     <string name="vineAttack_range">30 m</string>
     <string name="vineAttack_duration">dauerhaft</string>
     <string name="vineAttack_dc">5</string>
@@ -288,8 +288,8 @@ Blickweite von 5 m (-1 m x Steigerung) zu</string>
     <string name="familiar_name">Schutzgeist</string>
     <string name="familiar_description">ZW beschwört einen Wolfsgeist für 30 min, der dem ZW gehorcht und gedanklich Befehle
 entgegen nimmt. Der Geist kann Nahkampfangriffe ausführen. Für einen Angriff wirft
-der ZW eine Zaubernprobe. Der Geist verursacht 2W8 Schaden. Der Geist besitzt 20
-(+20xSteigerung) Hp und RK 0. Bewegungsweite 6 m.</string>
+der ZW eine Zaubernprobe. Der Geist verursacht 2W8(+1W6 pro Steigerung) Schaden. Der Geist besitzt 20
+(+20xSteigerung) Hp und AU 8. Bewegungsweite 6 m.</string>
     <string name="familiar_range">10 km</string>
     <string name="familiar_duration">30</string>
     <string name="familiar_dc">9</string>
@@ -306,9 +306,9 @@ gegen die Zauberprobe erforderlich.</string>
     <!--    protectiveField spell -->
     <string name="protectiveField_name">Schutzfeld</string>
     <string name="protectiveField_description">ZW erzeugt eine Schützende Sphäre mit 2 m Radius, die jedes Geschoss, welches die
-Sphäre durchdringt um 2(+2xSteigerung) Schaden abschwächt.</string>
+Sphäre durchdringt um 4(+4xSteigerung) Schaden abschwächt.</string>
     <string name="protectiveField_range">2 m</string>
-    <string name="protectiveField_duration">1+Lvl</string>
+    <string name="protectiveField_duration">(1+Lvl) Runden</string>
     <string name="protectiveField_dc">8</string>
     <string name="protectiveField_mana">2</string>
     <!--    mirrorImage spell -->
@@ -566,7 +566,7 @@ erzeugen. Erschwernis wird vom Spielleiter bestimmt.</string>
     <string name="iceForming_mana">3</string>
     <!--    extremeTemperature spell -->
     <string name="extremeTemperature_name">Extreme Temperatur</string>
-    <string name="extremeTemperature_description">ZW lässt die Temperatur um bis zu 10 C(+40 CxSteigerung) in 100 m Umkreis abfallen
+    <string name="extremeTemperature_description">ZW lässt die Temperatur um bis zu 20 C(+40 CxSteigerung) in 100 m Umkreis abfallen
 oder ansteigen.</string>
     <string name="extremeTemperature_range">100 m</string>
     <string name="extremeTemperature_duration">2 h</string>

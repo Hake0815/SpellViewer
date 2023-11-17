@@ -15,6 +15,7 @@ public class Spell implements Comparable, Serializable {
     private final String range;
     private final String duration;
     private final SpellCat spellcat;
+    private boolean custom;
 
     public Spell(String name, String description, int rank, String manaCost, String dc, Action actionCost, String range, String duration, SpellCat spellcat){
         this.name = name;
@@ -26,6 +27,19 @@ public class Spell implements Comparable, Serializable {
         this.range = range;
         this.duration = duration;
         this.spellcat = spellcat;
+        custom = false;
+    }
+    public Spell(String name, String description, int rank, String manaCost, String dc, Action actionCost, String range, String duration, SpellCat spellcat, boolean custom){
+        this.name = name;
+        this.description = description;
+        this.rank = rank;
+        this.manaCost = manaCost;
+        this.dc = dc;
+        this.actionCost = actionCost;
+        this.range = range;
+        this.duration = duration;
+        this.spellcat = spellcat;
+        this.custom = custom;
     }
 
     public String getDc() {
@@ -61,6 +75,10 @@ public class Spell implements Comparable, Serializable {
     }
     public SpellCat getSpellCat() {
         return spellcat;
+    }
+
+    public boolean isCustom() {
+        return custom;
     }
 
     @Override
