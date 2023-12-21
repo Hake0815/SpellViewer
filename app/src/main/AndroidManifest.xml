@@ -25,25 +25,35 @@
         <activity
             android:name=".SelectSpellListActivity"
             android:exported="false"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.SpellViewer" />
         <activity
             android:name=".CharacterActivity"
             android:exported="false"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.SpellViewer" />
         <activity
             android:name=".CharacterCreationActivity"
             android:exported="false"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.SpellViewer" />
         <activity
             android:name=".SpellCreationActivity"
             android:exported="false"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.SpellViewer" />
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

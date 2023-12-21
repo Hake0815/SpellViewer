@@ -90,10 +90,10 @@ public class CharacterCreationActivity extends AppCompatActivity {
 //                        The selected Image is scaled down to display size
                         DisplayMetrics displayMetrics = new DisplayMetrics();
                         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-                        int displayWidth = displayMetrics.widthPixels;
+                        int displayWidth = Math.min(displayMetrics.widthPixels,500);
                         int imageWidth = bitmap.getWidth();
                         int imageHeight = bitmap.getHeight();
-                        imageFromGallery = new SerialBitmap(getResizedBitmap(bitmap,displayWidth,imageHeight/imageWidth*displayWidth));
+                        imageFromGallery = new SerialBitmap(getResizedBitmap(bitmap,displayWidth,Math.round((float) imageHeight/imageWidth*displayWidth)));
                     }
                 });
 
